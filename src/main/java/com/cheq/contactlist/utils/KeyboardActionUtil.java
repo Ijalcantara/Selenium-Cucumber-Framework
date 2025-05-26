@@ -59,12 +59,17 @@ public class KeyboardActionUtil {
     public void typeText(By locator, String text, boolean clearBeforeTyping) {
         WebElement element = waitUtil.waitForElementToBeVisible(locator);
         element.click();
+
         if (clearBeforeTyping) {
             clearFieldUsingKeyboard(locator); // Clearing field before typing
         }
-        element.sendKeys(text);
-    }
 
+        for (char ch : text.toCharArray()) {
+            element.sendKeys(Character.toString(ch));
+            waitUtil.sleep(100); // 100ms delay between keystrokes (adjust as needed)
+        }
+    }
+    
     /**
      * Performs a copy-paste action from one element to another.
      * @param fromElement Source element
@@ -95,16 +100,5 @@ public class KeyboardActionUtil {
         WebElement element = waitUtil.waitForElementToBeVisible(locator);
         element.click();
         actions.sendKeys(Keys.ENTER).perform();
-    }
-
-    /**
-     * Types text into the field located by the provided locator and clears the field before typing.
-     * @param locator Locator of the element
-     * @param text Text to type
-     */
-    public void typeInField(By locator, String text) {
-        WebElement element = waitUtil.waitForElementToBeVisible(locator);
-        clearFieldUsingKeyboard(locator); // Clearing field before typing
-        element.sendKeys(text);
     }
 }

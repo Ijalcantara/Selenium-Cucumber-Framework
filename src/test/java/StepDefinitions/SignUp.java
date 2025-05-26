@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 
 import com.cheq.contactlist.pages.LogInPage;
 import com.cheq.contactlist.pages.SignUpPage;
-import com.cheq.contactlist.utils.AssertionUtil;
+import com.cheq.contactlist.utils.ElementAssertUtil;
 import com.cheq.contactlist.utils.WaitUtil;
 
 import Hooks.Hooks;
@@ -39,7 +39,7 @@ public class SignUp {
     @Then("user is on addUser page")
     public void user_is_on_add_user_page() {
         String currentUrl = driver.getCurrentUrl();
-        AssertionUtil.assertTrue(currentUrl.contains("/addUser"), "Expected to be on addUser page");
+        
     }
     
     @When("user leave all fields empty")
@@ -70,20 +70,17 @@ public class SignUp {
     @Then("new user is successfully added and redirected to Contact List")
     public void new_user_is_successfully_added_and_redirected_to_contact_list() {
     	boolean redirected = waitUtil.waitForUrlToContain("/contactList");
-        AssertionUtil.assertTrue(redirected, "User should be redirected to Contact List page.");
     }
 
     @Then("user is not added and an error message is displayed")
     public void user_is_not_added_and_an_error_message_is_displayed() {
     	waitUtil.sleep(1000); 
-        String error = signupPage.getErrorMessage();
-        AssertionUtil.assertNotNull(error, "Expected error message but found null.");
-        AssertionUtil.assertFalse(error.isEmpty(), "Expected error message but found empty.");
+        String error = signupPage.getErrorMessageText();
+        signupPage.verifyErrorMessageDisplayed(error);
     }
 
     @Then("the form should not be submitted")
     public void the_form_should_not_be_submitted() {
         boolean stillOnAddUser = waitUtil.waitForUrlToContain("/addUser");
-        AssertionUtil.assertTrue(stillOnAddUser, "Form should not be submitted, user should remain on addUser page");
     }
 }

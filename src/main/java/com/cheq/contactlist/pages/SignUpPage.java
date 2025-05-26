@@ -4,9 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.cheq.contactlist.utils.ElementAssertUtil;
 import com.cheq.contactlist.utils.KeyboardActionUtil;
 import com.cheq.contactlist.utils.MouseActionUtil;
-import com.cheq.contactlist.utils.WaitUtil;
 
 public class SignUpPage {
 	
@@ -20,7 +20,6 @@ public class SignUpPage {
         this.keyboardUtils = new KeyboardActionUtil(driver, 10);
     }
 
-    
     private By FIRSTNAME_INPUT = By.id("firstName");
     private By LASTNAME_INPUT = By.id("lastName");
     private By EMAIL_INPUT = By.id("email");
@@ -61,7 +60,15 @@ public class SignUpPage {
         mouseUtils.click(CANCEL_BTN);
     }
     
-    public String getErrorMessage() {
+    public void verifyErrorMessageDisplayed(String expectedText) {
+    	String actualMessage = getErrorMessageText();
+        ElementAssertUtil.assertTrue(
+            actualMessage != null && actualMessage.contains(expectedText),
+            "Expected error message to contain: '" + expectedText + "' but got: '" + actualMessage + "'"
+        );
+    }
+    
+    public String getErrorMessageText() {
         try {
             WebElement errorElement = driver.findElement(ERROR);
             return errorElement.getText().trim();

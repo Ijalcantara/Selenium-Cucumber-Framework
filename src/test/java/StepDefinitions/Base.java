@@ -5,34 +5,33 @@ import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 
+import com.cheq.contactlist.pages.BasePage;
 import com.cheq.contactlist.pages.LogInPage;
 import com.cheq.contactlist.utils.TestDataUtil;
 import com.cheq.contactlist.utils.WaitUtil;
 
 import Hooks.Hooks;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.en.Given;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class ContactList {
-
+public class Base {
+	
 	private WebDriver driver;
 	private WaitUtil waitUtil;
     private LogInPage loginPage;
+    private BasePage basePage;
 
-    public ContactList(Hooks hooks) {
+    public Base(Hooks hooks) {
         this.driver = hooks.getDriver();
         this.waitUtil = hooks.getWaitUtil();
         this.loginPage = new LogInPage(driver);
+        this.basePage = new BasePage(driver);
     }
     
-	@Given("user is in login page")
-	public void user_is_in_login_page() {
-	}
-
-	@When("user input a valid credentials")
-	public void user_input_a_valid_credentials(DataTable dataTable) {
+	@When("user enter a valid credentials")
+	public void user_enter_a_valid_credentials(DataTable dataTable) {
 		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
 	    for (Map<String, String> row : rows) {
 	        String email = row.get("email");
@@ -45,17 +44,17 @@ public class ContactList {
 
 	        loginPage.enterEmail(email);
 	        loginPage.enterPassword(resolvedPassword);
-        }
+	}
+}
+	
+	@And("user click the logut button")
+	public void user_click_the_logut_button() {
+		basePage.clickLogOutButton();
 	}
 
-	@When("hit the Submit button")
-	public void hit_the_submit_button() {
-		loginPage.clickSubmitButton();
-	}
-
-	@Then("user is redirected to contact details page.")
-	public void user_is_redirected_to_contact_details_page() {
+	@Then("user is navigated to login page")
+	public void user_is_navigated_to_login_page() {
 		waitUtil.pause(2);
-		boolean redirected = waitUtil.waitForUrlToContain("/contactList");
+		boolean redirected = waitUtil.waitForUrlToContain("https://thinking-tester-contact-list.herokuapp.com/");
 	}
 }

@@ -27,7 +27,7 @@ Feature: Test signup functionality
     Then user is on addUser page
     When user input in all fields
       | firstName | lastName | email             | password   |
-      | John      | Doe      | cesskobe@test.com | {password} |
+      | Carmen      | Fernandez      | minmin@test.com | {password} |
     And hit the signUp Submit button
     Then new user is successfully added and redirected to Contact List
 

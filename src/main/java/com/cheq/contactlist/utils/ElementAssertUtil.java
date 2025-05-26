@@ -3,7 +3,7 @@ package com.cheq.contactlist.utils;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
-public class AssertionUtil {
+public class ElementAssertUtil {
 
 	public static void assertTextEquals(String actual, String expected, String message) {
         Assert.assertEquals(actual, expected, message);
@@ -22,11 +22,7 @@ public class AssertionUtil {
     }
 
     public static void assertElementDisplayed(WebElement element, String elementName) {
-        try {
-            Assert.assertTrue(element != null && element.isDisplayed(), "Expected element to be displayed: " + elementName);
-        } catch (Exception e) {
-            Assert.fail("Exception occurred while checking if element is displayed (" + elementName + "): " + e.getMessage());
-        }
+        Assert.assertTrue(element.isDisplayed(), "Expected element to be displayed: " + elementName);
     }
 
     public static void assertNotNull(Object object, String message) {

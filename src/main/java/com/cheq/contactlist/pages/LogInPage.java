@@ -4,9 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.cheq.contactlist.utils.ElementAssertUtil;
 import com.cheq.contactlist.utils.KeyboardActionUtil;
 import com.cheq.contactlist.utils.MouseActionUtil;
-import com.cheq.contactlist.utils.WaitUtil;
 
 public class LogInPage {
 	
@@ -25,7 +25,7 @@ public class LogInPage {
     public LogInPage(WebDriver driver) {
         this.driver = driver;
         this.mouseUtils = new MouseActionUtil(driver);
-        this.keyboardUtils = new KeyboardActionUtil(driver, 10); // Assuming 10 seconds timeout
+        this.keyboardUtils = new KeyboardActionUtil(driver, 10); 
     }
 
     public void enterEmail(String email) {
@@ -57,6 +57,43 @@ public class LogInPage {
         logoutButton.click();
     }
 
+    /** Verifies that the submit button is enabled */
+    public void verifySubmitButtonIsEnabled() {
+        WebElement submitButton = driver.findElement(SUBMIT_BUTTON);
+        ElementAssertUtil.assertTrue(submitButton.isEnabled(), "Submit button should be enabled");
+    }
+
+    /** Verifies that the email field is displayed */
+    public void verifyEmailFieldPresent() {
+        WebElement emailField = driver.findElement(EMAIL_INPUT);
+        ElementAssertUtil.assertElementDisplayed(emailField, "Email input field");
+    }
+
+    /** Verifies that the password field is displayed */
+    public void verifyPasswordFieldPresent() {
+        WebElement passwordField = driver.findElement(PASSWORD_INPUT);
+        ElementAssertUtil.assertElementDisplayed(passwordField, "Password input field");
+    }
+
+    /** Verifies that the sign-up button is visible */
+    public void verifySignUpButtonVisible() {
+        WebElement signUpBtn = driver.findElement(SIGNUP_BUTTON);
+        ElementAssertUtil.assertElementDisplayed(signUpBtn, "Sign up button");
+    }
+
+    /** Verifies that logout button is visible */
+    public void verifyLogoutButtonVisible() {
+        WebElement logoutBtn = driver.findElement(LOGOUT_BUTTON);
+        ElementAssertUtil.assertElementDisplayed(logoutBtn, "Logout button");
+    }
+    
+    public void verifyErrorMessageDisplayed(String expectedText) {
+        String actualMessage = getErrorMessageText();
+        ElementAssertUtil.assertFalse(actualMessage.contains(expectedText),
+            "Expected error message to contain: '" + expectedText + "' but got: '" + actualMessage + "'");
+    }
+
+    // Getters
     public WebElement getErrorMessageElement() {
         return driver.findElement(ERROR_MESSAGE);
     }

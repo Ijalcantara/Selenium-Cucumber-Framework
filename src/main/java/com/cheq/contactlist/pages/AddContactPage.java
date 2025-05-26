@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.cheq.contactlist.utils.ElementAssertUtil;
 import com.cheq.contactlist.utils.KeyboardActionUtil;
 import com.cheq.contactlist.utils.MouseActionUtil;
 import com.cheq.contactlist.utils.WaitUtil;
@@ -20,7 +21,6 @@ public class AddContactPage {
         this.keyboardUtils = new KeyboardActionUtil(driver, 10); // Assuming 10 seconds timeout
     }
 
-
     private By FIRST_NAME = By.id("firstName");
     private By LAST_NAME = By.id("lastName");
     private By DATE_OF_BIRTH = By.id("birthdate");
@@ -34,6 +34,7 @@ public class AddContactPage {
     private By COUNTRY = By.id("country");
     private By SUBMIT_BUTTON = By.id("submit");
     private By CANCEL_BUTTON = By.id("cancel");
+    private By ERROR = By.id("error");
 
     public void enterFirstName(String firstName) {
     	keyboardUtils.typeText(FIRST_NAME, firstName, true);
@@ -85,5 +86,22 @@ public class AddContactPage {
 
     public void clickCancelButton() {
         mouseUtils.click(CANCEL_BUTTON);
+    }
+    
+    public void verifyErrorMessageDisplayed(String expectedText) {
+    	String actualMessage = getErrorMessageText();
+        ElementAssertUtil.assertTrue(
+            actualMessage != null && actualMessage.contains(expectedText),
+            "Expected error message to contain: '" + expectedText + "' but got: '" + actualMessage + "'"
+        );
+    }
+    
+    public String getErrorMessageText() {
+        try {
+            WebElement errorElement = driver.findElement(ERROR);
+            return errorElement.getText().trim();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

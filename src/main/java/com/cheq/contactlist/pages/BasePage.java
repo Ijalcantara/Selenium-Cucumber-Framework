@@ -15,7 +15,6 @@ public class BasePage {
         this.mouseUtils = new MouseActionUtil(driver);
     }
     
-    
     private By LOGOUT_BTN = By.id("logout");
     
     public void clickLogOutButton() {

@@ -34,12 +34,11 @@ public class EditContactPage {
     private By SUBMIT_BUTTON = By.id("submit");
     private By CANCEL_BUTTON = By.id("cancel");
     
-    
-    public void setFirstName(String firstName) {
+    public void enterFirstName(String firstName) {
     	keyboardUtils.typeText(FIRST_NAME, firstName, true);
     }
     
-    public void setLastName(String lastName) {
+    public void enterLastName(String lastName) {
     	keyboardUtils.typeText(LAST_NAME, lastName, true);
     }
 

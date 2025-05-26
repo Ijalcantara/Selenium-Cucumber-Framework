@@ -88,6 +88,16 @@ public class WaitUtil {
         }
     }
     
+//    private By ERROR_MESSAGE = By.id("error");
+//    
+//    public void waitForErrorMessageText(int timeoutSeconds) {
+//        new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds))
+//            .until(driver -> {
+//                WebElement errorElement = driver.findElement(ERROR_MESSAGE);
+//                return errorElement.isDisplayed() && !errorElement.getText().trim().isEmpty();
+//            });
+//    }
+    
     public boolean waitForVisibility(By locator) {
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
