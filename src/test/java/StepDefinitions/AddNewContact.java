@@ -29,7 +29,7 @@ public class AddNewContact {
         this.driver = hooks.getDriver();
         this.waitUtil = hooks.getWaitUtil();
         this.loginPage = new LogInPage(driver);
-        this.contactListPage = new ContactListPage(driver);
+        this.contactListPage = new ContactListPage(driver, waitUtil);
         this.addContact = new AddContactPage(driver);
     }
     

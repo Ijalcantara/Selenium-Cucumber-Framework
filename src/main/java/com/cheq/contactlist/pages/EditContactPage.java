@@ -17,7 +17,7 @@ public class EditContactPage {
     public EditContactPage(WebDriver driver) {
         this.driver = driver;
         this.mouseUtils = new MouseActionUtil(driver);
-        this.keyboardUtils = new KeyboardActionUtil(driver, 10); // Assuming 10 seconds timeout
+        this.keyboardUtils = new KeyboardActionUtil(driver, 10); 
     }
     
     private By FIRST_NAME = By.id("firstName");
@@ -42,39 +42,39 @@ public class EditContactPage {
     	keyboardUtils.typeText(LAST_NAME, lastName, true);
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void enterDateOfBirth(String dateOfBirth) {
     	keyboardUtils.typeText(DATE_OF_BIRTH, dateOfBirth, true);
     }
 
-    public void setEmail(String email) {
+    public void enterEmail(String email) {
     	keyboardUtils.typeText(EMAIL, email, true);
     }
 
-    public void setPhone(String phone) {
+    public void enterPhone(String phone) {
     	keyboardUtils.typeText(PHONE, phone, true);
     }
 
-    public void setStreetAddress1(String streetAddress1) {
+    public void enterStreetAddress1(String streetAddress1) {
     	keyboardUtils.typeText(STREET_ADDRESS1, streetAddress1, true);
     }
 
-    public void setStreetAddress2(String streetAddress2) {
+    public void enterStreetAddress2(String streetAddress2) {
     	keyboardUtils.typeText(STREET_ADDRESS2, streetAddress2, true);
     }
 
-    public void setCity(String city) {
+    public void enterCity(String city) {
     	keyboardUtils.typeText(CITY, city, true);
     }
 
-    public void setStateProvince(String stateProvince) {
+    public void enterStateProvince(String stateProvince) {
     	keyboardUtils.typeText(STATE, stateProvince, true);
     }
 
-    public void setPostalCode(String postalCode) {
+    public void enterPostalCode(String postalCode) {
     	keyboardUtils.typeText(POSTAL_CODE, postalCode, true);
     }
 
-    public void selectCountry(String country) {
+    public void enterCountry(String country) {
     	keyboardUtils.typeText(COUNTRY, country, true);
     }
 

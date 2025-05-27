@@ -2,6 +2,7 @@ package com.cheq.contactlist.utils;
 
 import java.time.Duration;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -35,7 +36,6 @@ public class WaitUtil {
             throw new RuntimeException("Interrupted during pause", e);
         }
     }
-
    
     /**
      * Waits for an element to be visible.
@@ -88,15 +88,11 @@ public class WaitUtil {
         }
     }
     
-//    private By ERROR_MESSAGE = By.id("error");
-//    
-//    public void waitForErrorMessageText(int timeoutSeconds) {
-//        new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds))
-//            .until(driver -> {
-//                WebElement errorElement = driver.findElement(ERROR_MESSAGE);
-//                return errorElement.isDisplayed() && !errorElement.getText().trim().isEmpty();
-//            });
-//    }
+    public Alert waitForAlert() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.alertIsPresent());
+    }
+ 
     
     public boolean waitForVisibility(By locator) {
         try {

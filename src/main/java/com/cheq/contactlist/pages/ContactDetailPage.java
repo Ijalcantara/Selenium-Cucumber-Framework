@@ -1,8 +1,12 @@
 package com.cheq.contactlist.pages;
 
+import java.util.List;
+
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 import com.cheq.contactlist.utils.KeyboardActionUtil;
 import com.cheq.contactlist.utils.MouseActionUtil;
@@ -13,20 +17,21 @@ public class ContactDetailPage {
 	private WebDriver driver;
     private MouseActionUtil mouseUtils;
     private KeyboardActionUtil keyboardUtils;
+    private WaitUtil waitUtil;
 
-	  // Constructor for Add Contact Page
-    public ContactDetailPage(WebDriver driver) {
+    // Constructor for Add Contact Page
+    public ContactDetailPage(WebDriver driver, WaitUtil waitUtil) {
         this.driver = driver;
+        this.waitUtil = waitUtil;
         this.mouseUtils = new MouseActionUtil(driver);
-        this.keyboardUtils = new KeyboardActionUtil(driver, 10); // Assuming 10 seconds timeout
+        this.keyboardUtils = new KeyboardActionUtil(driver, 10);
     }
 
-    // Buttons
+
     private By EDIT_CONTACT_BTN = By.id("edit-contact");
-    private By DELETE_CONTACT_BTN = By.id("Delete Contact");
+    private By DELETE_CONTACT_BTN = By.id("delete");
     private By RETURN_TO_LIST_BTN = By.id("return");
     
-    // Text
     private By FIRSTNAME_TXT = By.id("firstName");
     private By LASTNAME_TXT = By.id("lastName");
     private By DOB_TXT = By.id("birthDate");
@@ -98,5 +103,31 @@ public class ContactDetailPage {
 
     private String getTextWithoutLabel(WebElement element, String label) {
         return element.getText().replace(label, "").trim();
+    }
+    
+    public void assertDeleteConfirmationPromptIsDisplayed() {
+        Alert alert = waitUtil.waitForAlert();
+        Assert.assertNotNull(alert, "Delete confirmation alert did not appear");
+ 
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+ 
+        String alertText = alert.getText();
+        Assert.assertTrue(alertText.toLowerCase().contains("delete"),
+            "Alert text does not mention deletion: " + alertText);
+    }
+    
+    public void confirmDeleteOnConfirmationDialog() {
+        Alert alert = waitUtil.waitForAlert();
+        Assert.assertNotNull(alert, "Delete confirmation alert did not appear");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        alert.accept();
     }
 }

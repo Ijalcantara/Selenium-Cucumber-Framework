@@ -4,13 +4,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import com.cheq.contactlist.utils.MouseActionUtil;
 
-public class BasePage {
+public class LogOutPage {
 
 	protected WebDriver driver;
     protected MouseActionUtil mouseUtils;
     
 
-    public BasePage(WebDriver driver) {
+    public LogOutPage(WebDriver driver) {
         this.driver = driver;
         this.mouseUtils = new MouseActionUtil(driver);
     }

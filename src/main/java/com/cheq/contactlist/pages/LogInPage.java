@@ -14,7 +14,6 @@ public class LogInPage {
     private MouseActionUtil mouseUtils;
     private KeyboardActionUtil keyboardUtils;
 
-    // Locators
     private By EMAIL_INPUT = By.id("email");
     private By PASSWORD_INPUT = By.id("password");
     private By SUBMIT_BUTTON = By.id("submit");
