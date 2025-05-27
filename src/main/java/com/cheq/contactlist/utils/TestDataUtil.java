@@ -42,4 +42,18 @@ public class TestDataUtil {
 	        }
 	        throw new RuntimeException("No test data found for email: " + email);
 	    }
+	    
+	    
+	    public static String resolvePassword(String email, String passwordKey) {
+	        if ("{password}".equals(passwordKey)) {
+	            return getPasswordFromJson(email, true);
+	        }
+	        if ("{invalid_password}".equals(passwordKey)) {
+	            return getPasswordFromJson(email, false);
+	        }
+	        if ("{empty}".equalsIgnoreCase(passwordKey)) {
+	            return "";
+	        }
+	        return passwordKey;
+	    }
 }

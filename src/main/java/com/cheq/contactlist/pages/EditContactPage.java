@@ -17,7 +17,7 @@ public class EditContactPage {
     public EditContactPage(WebDriver driver) {
         this.driver = driver;
         this.mouseUtils = new MouseActionUtil(driver);
-        this.keyboardUtils = new KeyboardActionUtil(driver, 10); 
+        this.keyboardUtils = new KeyboardActionUtil(driver); 
     }
     
     private By FIRST_NAME = By.id("firstName");

@@ -11,11 +11,13 @@ public class KeyboardActionUtil {
 	private WebDriver driver;
     private Actions actions;
     private WaitUtil waitUtil;
+    private int timeout;
 
-    public KeyboardActionUtil(WebDriver driver, int timeoutInSeconds) {
+    public KeyboardActionUtil(WebDriver driver) {
         this.driver = driver;
         this.actions = new Actions(driver);
-        this.waitUtil = new WaitUtil(driver, timeoutInSeconds);
+        this.waitUtil = new WaitUtil(driver);
+        this.timeout = 10;
     }
 
     public void pressEnter() {

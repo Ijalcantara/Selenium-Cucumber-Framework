@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 public class MouseActionUtil {
-
 	
 	private WebDriver driver;
     private Actions actions;
@@ -15,7 +14,7 @@ public class MouseActionUtil {
     public MouseActionUtil(WebDriver driver) {
         this.driver = driver;
         this.actions = new Actions(driver);
-        this.waitUtil = new WaitUtil(driver, 10); // Default 10 seconds, or you can pass it as a param
+        this.waitUtil = new WaitUtil(driver);
     }
 
     public void hover(By locator) {
@@ -24,7 +23,7 @@ public class MouseActionUtil {
     }
 
     public void hover(WebElement element) {
-        waitUtil.waitForElementToBeVisible(getByFromElement(element)); // Optional validation
+        waitUtil.waitForElementToBeVisible(getByFromElement(element)); 
         actions.moveToElement(element).perform();
     }
 
@@ -60,7 +59,7 @@ public class MouseActionUtil {
     }
 
     public void click(WebElement element) {
-        waitUtil.waitForElementToBeVisible(getByFromElement(element)); // Optional validation
+        waitUtil.waitForElementToBeVisible(getByFromElement(element)); 
         actions.moveToElement(element).click().perform();
     }
 
@@ -69,8 +68,13 @@ public class MouseActionUtil {
      * If you have full control over your test framework, consider passing By instead of WebElement.
      */
     private By getByFromElement(WebElement element) {
-        // Dummy fallback, can’t really extract locator from WebElement in Selenium directly.
-        // Only usable for validation; override this method if needed.
-        return By.xpath("."); // Always returns a dummy; real-world use would pass a By instead.
+        return By.xpath("."); 
+    }
+    
+    // For clicking the contact in a row
+    public void clickAnyContactRow() {
+        By contactRowLocator = By.cssSelector(".contactTableBodyRow");
+        WebElement contactRow = waitUtil.waitForElementToBeVisible(contactRowLocator);
+        contactRow.click();
     }
 }

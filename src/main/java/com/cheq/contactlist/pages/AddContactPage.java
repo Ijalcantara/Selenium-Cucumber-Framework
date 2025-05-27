@@ -18,7 +18,7 @@ public class AddContactPage {
     public AddContactPage(WebDriver driver) {
         this.driver = driver;
         this.mouseUtils = new MouseActionUtil(driver);
-        this.keyboardUtils = new KeyboardActionUtil(driver, 10); // Assuming 10 seconds timeout
+        this.keyboardUtils = new KeyboardActionUtil(driver); 
     }
 
     private By FIRST_NAME = By.id("firstName");
@@ -34,7 +34,6 @@ public class AddContactPage {
     private By COUNTRY = By.id("country");
     private By SUBMIT_BUTTON = By.id("submit");
     private By CANCEL_BUTTON = By.id("cancel");
-    private By ERROR = By.id("error");
 
     public void enterFirstName(String firstName) {
     	keyboardUtils.typeText(FIRST_NAME, firstName, true);
@@ -89,19 +88,6 @@ public class AddContactPage {
     }
     
     public void verifyErrorMessageDisplayed(String expectedText) {
-    	String actualMessage = getErrorMessageText();
-        ElementAssertUtil.assertTrue(
-            actualMessage != null && actualMessage.contains(expectedText),
-            "Expected error message to contain: '" + expectedText + "' but got: '" + actualMessage + "'"
-        );
-    }
-    
-    public String getErrorMessageText() {
-        try {
-            WebElement errorElement = driver.findElement(ERROR);
-            return errorElement.getText().trim();
-        } catch (Exception e) {
-            return null;
-        }
-    }
+    	ElementAssertUtil.assertErrorMessageContains(driver, expectedText);
+    }  
 }

@@ -1,6 +1,5 @@
 package StepDefinitions;
 
-import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
@@ -8,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import com.cheq.contactlist.pages.AddContactPage;
 import com.cheq.contactlist.pages.ContactListPage;
 import com.cheq.contactlist.pages.LogInPage;
-import com.cheq.contactlist.utils.TestDataUtil;
+import com.cheq.contactlist.utils.TestDataResolver;
 import com.cheq.contactlist.utils.WaitUtil;
 
 import Hooks.Hooks;
@@ -39,20 +38,14 @@ public class AddNewContact {
 
 	@When("user input a credentials to open an account")
 	public void user_input_a_credentials_to_open_an_account(DataTable dataTable) {
+		Map<String, String> row = dataTable.asMaps(String.class, String.class).get(0);
+        String email = row.get("email");
+        String rawPassword = row.get("password");
 
-		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-	    for (Map<String, String> row : rows) {
-	        String email = row.get("email");
-	        String rawPassword = row.get("password");
+        String resolvedPassword = TestDataResolver.resolvePassword(email, rawPassword, true);
 
-	        // If placeholder, resolve from JSON
-	        String resolvedPassword = rawPassword.equals("{password}")
-	                ? TestDataUtil.getPassword(email)
-	                : rawPassword;
-
-	        loginPage.enterEmail(email);
-	        loginPage.enterPassword(resolvedPassword);
-        }
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(resolvedPassword);
 	}
 
 	@Then("user is navigated in the ContactList page")
@@ -68,22 +61,19 @@ public class AddNewContact {
 
 	@When("user enter details in all fields")
 	public void user_enter_details_in_all_fields(DataTable dataTable) {
-
-		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-        for (Map<String, String> row : rows) {
-            addContact.enterFirstName(row.get("firstName"));
-            addContact.enterLastName(row.get("lastName"));
-            addContact.enterBirthdate(row.get("birthdate"));
-            addContact.enterEmail(row.get("email"));
-            addContact.enterPhone(row.get("phone"));
-            addContact.enterStreet1(row.get("street1"));
-            addContact.enterStreet2(row.get("street2"));
-            addContact.enterCity(row.get("city"));
-            addContact.enterState(row.get("stateProvince"));
-            addContact.enterPostalCode(row.get("postalCode"));
-            addContact.enterCountry(row.get("country"));          
+		Map<String, String> row = dataTable.asMaps(String.class, String.class).get(0);
+        addContact.enterFirstName(row.get("firstName"));
+        addContact.enterLastName(row.get("lastName"));
+        addContact.enterBirthdate(row.get("birthdate"));
+        addContact.enterEmail(row.get("email"));
+        addContact.enterPhone(row.get("phone"));
+        addContact.enterStreet1(row.get("street1"));
+        addContact.enterStreet2(row.get("street2"));
+        addContact.enterCity(row.get("city"));
+        addContact.enterState(row.get("stateProvince"));
+        addContact.enterPostalCode(row.get("postalCode"));
+        addContact.enterCountry(row.get("country"));              
         }
-	}
 	
 	@When("click addnewContact submit button")
 	public void click_addnew_contact_submit_button() {
@@ -95,10 +85,8 @@ public class AddNewContact {
 		boolean redirected = waitUtil.waitForUrlToContain("/contactList");
 	}
 	
-	@Then("error occured and user is not added in the list")
-	public void error_occured_and_user_is_not_added_in_the_list() {
-		waitUtil.sleep(1000); 
-        String error = addContact.getErrorMessageText();
-        addContact.verifyErrorMessageDisplayed(error);
+	@Then("error occured and display error message {string}")
+	public void error_occured_and_display_error_message(String expectedMessage) {
+	    addContact.verifyErrorMessageDisplayed(expectedMessage); 
 	}
 }

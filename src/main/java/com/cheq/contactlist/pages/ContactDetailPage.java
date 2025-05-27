@@ -16,15 +16,12 @@ public class ContactDetailPage {
 	
 	private WebDriver driver;
     private MouseActionUtil mouseUtils;
-    private KeyboardActionUtil keyboardUtils;
-    private WaitUtil waitUtil;
+
 
     // Constructor for Add Contact Page
     public ContactDetailPage(WebDriver driver, WaitUtil waitUtil) {
         this.driver = driver;
-        this.waitUtil = waitUtil;
         this.mouseUtils = new MouseActionUtil(driver);
-        this.keyboardUtils = new KeyboardActionUtil(driver, 10);
     }
 
 
@@ -103,31 +100,5 @@ public class ContactDetailPage {
 
     private String getTextWithoutLabel(WebElement element, String label) {
         return element.getText().replace(label, "").trim();
-    }
-    
-    public void assertDeleteConfirmationPromptIsDisplayed() {
-        Alert alert = waitUtil.waitForAlert();
-        Assert.assertNotNull(alert, "Delete confirmation alert did not appear");
- 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
- 
-        String alertText = alert.getText();
-        Assert.assertTrue(alertText.toLowerCase().contains("delete"),
-            "Alert text does not mention deletion: " + alertText);
-    }
-    
-    public void confirmDeleteOnConfirmationDialog() {
-        Alert alert = waitUtil.waitForAlert();
-        Assert.assertNotNull(alert, "Delete confirmation alert did not appear");
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        alert.accept();
     }
 }

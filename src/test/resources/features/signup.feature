@@ -7,7 +7,7 @@ Feature: Test signup functionality
     Then user is on addUser page
     When user leave all fields empty
     And hit the signUp Submit button
-    Then user is not added and an error message is displayed
+    Then user is not added and an error message is displayed "User validation failed: firstName: Path `firstName` is required., lastName: Path `lastName` is required., email: Email is invalid, password: Path `password` is required."
     And the form should not be submitted
 
   @TC2.2
@@ -18,7 +18,7 @@ Feature: Test signup functionality
       | firstName | lastName | email                   | password |
       | Sample    | Error    | passwordError@gmail.com | pass     |
     And hit the signUp Submit button
-    Then user is not added and an error message is displayed
+    Then user is not added and an error message is displayed "User validation failed: email: Email is invalid, password: Path `password` (`pass`) is shorter than the minimum allowed length (7)."
     And the form should not be submitted
 
   @TC2.3
@@ -39,7 +39,7 @@ Feature: Test signup functionality
       | firstName | lastName | email          | password   |
       | John      | Doe      | emailerror.com | {password} |
     And hit the signUp Submit button
-    Then user is not added and an error message is displayed
+    Then user is not added and an error message is displayed "User validation failed: email: Email is invalid"
     And the form should not be submitted
 
   @TC2.5
@@ -50,5 +50,5 @@ Feature: Test signup functionality
       | firstName | lastName | email             | password   |
       | John      | Doe      | mamanya@gmail.com | {password} |
     And hit the signUp Submit button
-    Then user is not added and an error message is displayed
+    Then user is not added and an error message is displayed "Email address is already in use"
     And the form should not be submitted

@@ -10,6 +10,7 @@ import com.cheq.contactlist.pages.ContactListPage;
 import com.cheq.contactlist.pages.EditContactPage;
 import com.cheq.contactlist.pages.LogInPage;
 import com.cheq.contactlist.pages.LogOutPage;
+import com.cheq.contactlist.utils.TestDataResolver;
 import com.cheq.contactlist.utils.TestDataUtil;
 import com.cheq.contactlist.utils.WaitUtil;
 
@@ -41,18 +42,14 @@ public class EditContact {
 
     @When("user enter required valid credentials")
     public void user_enter_required_valid_credentials(DataTable dataTable) {
-        List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-        for (Map<String, String> row : rows) {
-            String email = row.get("email");
-            String rawPassword = row.get("password");
+    	Map<String, String> row = dataTable.asMaps(String.class, String.class).get(0);
+        String email = row.get("email");
+        String rawPassword = row.get("password");
 
-            String resolvedPassword = rawPassword.equals("{password}")
-                    ? TestDataUtil.getPassword(email)
-                    : rawPassword;
+        String resolvedPassword = TestDataResolver.resolvePassword(email, rawPassword, true);
 
-            loginPage.enterEmail(email);
-            loginPage.enterPassword(resolvedPassword);
-        }
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(resolvedPassword);
     }
 
     @And("click the editContact button")
@@ -84,12 +81,10 @@ public class EditContact {
 
     @When("user enter new name")
     public void user_enter_new_name(DataTable dataTable) {
-        List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-        for (Map<String, String> row : rows) {
-            editContactPage.enterFirstName(row.get("firstName"));
-            editContactPage.enterLastName(row.get("lastName"));
-            editContactPage.enterCountry(row.get("country"));
-        }
+        Map<String, String> row = dataTable.asMaps(String.class, String.class).get(0);
+        editContactPage.enterFirstName(row.get("firstName"));
+        editContactPage.enterLastName(row.get("lastName"));
+        editContactPage.enterCountry(row.get("country"));
     }
 
     @When("hit the ediContact submit button")

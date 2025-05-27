@@ -17,7 +17,7 @@ public class SignUpPage {
     public SignUpPage(WebDriver driver) {
         this.driver = driver;
         this.mouseUtils = new MouseActionUtil(driver);
-        this.keyboardUtils = new KeyboardActionUtil(driver, 10);
+        this.keyboardUtils = new KeyboardActionUtil(driver);
     }
 
     private By FIRSTNAME_INPUT = By.id("firstName");
@@ -26,7 +26,6 @@ public class SignUpPage {
     private By PASSWORD_INPUT = By.id("password");
     private By SUBMIT_BTN = By.id("submit");
     private By CANCEL_BTN = By.id("cancel");
-    private By ERROR = By.id("error");
 
     public void enterFirstName(String firstName) {
     	keyboardUtils.typeText(FIRSTNAME_INPUT, firstName, true);
@@ -61,19 +60,6 @@ public class SignUpPage {
     }
     
     public void verifyErrorMessageDisplayed(String expectedText) {
-    	String actualMessage = getErrorMessageText();
-        ElementAssertUtil.assertTrue(
-            actualMessage != null && actualMessage.contains(expectedText),
-            "Expected error message to contain: '" + expectedText + "' but got: '" + actualMessage + "'"
-        );
-    }
-    
-    public String getErrorMessageText() {
-        try {
-            WebElement errorElement = driver.findElement(ERROR);
-            return errorElement.getText().trim();
-        } catch (Exception e) {
-            return null;
-        }
+    	ElementAssertUtil.assertErrorMessageContains(driver, expectedText);
     }
 }

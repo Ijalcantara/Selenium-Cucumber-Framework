@@ -4,10 +4,10 @@ package StepDefinitions;
 import java.awt.AWTException;
 import java.io.IOException;
 
+
 import org.openqa.selenium.WebDriver;
 import com.cheq.contactlist.pages.LogInPage;
-import com.cheq.contactlist.utils.ElementAssertUtil;
-import com.cheq.contactlist.utils.TestDataUtil;
+import com.cheq.contactlist.utils.TestDataResolver;
 import com.cheq.contactlist.utils.WaitUtil;
 
 import Hooks.Hooks;
@@ -40,7 +40,7 @@ public class LogIn {
         loginPage.verifySubmitButtonIsEnabled();
         loginPage.verifySignUpButtonVisible();
     }
-
+    
     @When("user enter a valid email {string}")
     public void user_enter_a_valid_email_address(String email) {
         this.currentEmail = email;
@@ -55,26 +55,20 @@ public class LogIn {
 
     @And("user enter a valid password {string}")
     public void user_enter_a_valid_password(String password) {
-        if ("{password}".equals(password)) {
-            password = TestDataUtil.getPasswordFromJson(currentEmail, true);
-        }
-        loginPage.enterPassword(password);
+    	String resolvedPassword = TestDataResolver.resolvePassword(currentEmail, password, true);
+        loginPage.enterPassword(resolvedPassword);
     }
 
     @And("user enter a invalid password {string}")
     public void user_enter_an_invalid_password(String password) {
-        if ("{password}".equals(password)) {
-            password = TestDataUtil.getPasswordFromJson(currentEmail, false);
-        }
-        loginPage.enterPassword(password);
+    	String resolvedPassword = TestDataResolver.resolvePassword(currentEmail, password, false);
+        loginPage.enterPassword(resolvedPassword);
     }
 
     @And("user leave an empty password {string}")
     public void user_leave_an_empty_password(String password) {
-        if ("{empty}".equalsIgnoreCase(password)) {
-            password = "";
-        }
-        loginPage.enterPassword(password);
+    	String resolvedPassword = TestDataResolver.resolvePassword(currentEmail, password, false);
+        loginPage.enterPassword(resolvedPassword);
     }
 
     @And("hit Submit")
@@ -92,8 +86,9 @@ public class LogIn {
         loginPage.clickLogOutButton();
     }
 
-    @Then("the login fails and display an error message")
-    public void the_login_fails_and_display_an_error_message() throws IOException, AWTException {
-        loginPage.verifyErrorMessageDisplayed("Incorrect username or password");
+    
+    @Then("the login fails and display an error message {string}")
+    public void the_login_fails_and_display_an_error_message(String expectedMessage) {
+    	loginPage.verifyErrorMessageDisplayed(expectedMessage);
     }
 }

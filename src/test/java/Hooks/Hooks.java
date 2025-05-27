@@ -2,6 +2,9 @@ package Hooks;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import com.cheq.contactlist.utils.DriverFactory;
 import com.cheq.contactlist.utils.WaitUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,15 +29,11 @@ public class Hooks {
     @Before
     public void setUp() throws InterruptedException {
         System.out.println("Inside Hook - before scenario");
-
-        String projectPath = System.getProperty("user.dir");
-        System.setProperty("webdriver.chrome.driver", projectPath + "/src/main/resources/drivers/chromedriver.exe");
-
-        driver = new ChromeDriver();
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(40));
-
-        waitUtil = new WaitUtil(driver, 10);
         
+        driver = DriverFactory.initDriver(); 
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(40));
+        waitUtil = new WaitUtil(driver);
+
         driver.navigate().to("https://thinking-tester-contact-list.herokuapp.com/");
     }
 
@@ -42,6 +42,17 @@ public class Hooks {
         System.out.println("Inside Hook - after scenario");
 
         saveScenarioResult(scenario);
+
+        // Attach file contents to scenario report
+        try {
+            Path logPath = Paths.get("target/reports/scenario-result.json");
+            if (Files.exists(logPath)) {
+                byte[] data = Files.readAllBytes(logPath);
+                scenario.attach(data, "application/json", "Scenario Result JSON");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (driver != null) {
             waitUtil.waitForElementToBeVisible(By.tagName("body"));

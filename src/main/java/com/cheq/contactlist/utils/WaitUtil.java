@@ -15,6 +15,7 @@ public class WaitUtil {
 
 	private WebDriver driver;
     private WebDriverWait wait;
+    private static final int DEFAULT_TIMEOUT = 10;
 
     /**
      * Constructor that sets implicit and explicit waits.
@@ -22,10 +23,10 @@ public class WaitUtil {
      * @param driver            WebDriver instance
      * @param timeoutInSeconds  Default timeout for waits
      */
-    public WaitUtil(WebDriver driver, int timeoutInSeconds) {
+    public WaitUtil(WebDriver driver) {
         this.driver = driver;
-        this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeoutInSeconds)); // Implicit wait
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds)); // Explicit wait
+        this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(DEFAULT_TIMEOUT)); // Implicit wait
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_TIMEOUT)); // Explicit wait
     }
     
     public void pause(int seconds) {
@@ -68,6 +69,7 @@ public class WaitUtil {
 
     /**
      * Waits for URL to contain a specific text.
+     * @throws InterruptedException 
      */
     public boolean waitForUrlToContain(String partialUrl) {
         try {

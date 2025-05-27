@@ -1,12 +1,11 @@
 package StepDefinitions;
 
-import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 
 import com.cheq.contactlist.pages.LogInPage;
-import com.cheq.contactlist.utils.TestDataUtil;
+import com.cheq.contactlist.utils.TestDataResolver;
 import com.cheq.contactlist.utils.WaitUtil;
 
 import Hooks.Hooks;
@@ -33,20 +32,15 @@ public class ContactList {
 
 	@When("user input a valid credentials")
 	public void user_input_a_valid_credentials(DataTable dataTable) {
-		List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-	    for (Map<String, String> row : rows) {
-	        String email = row.get("email");
-	        String rawPassword = row.get("password");
+		Map<String, String> row = dataTable.asMaps(String.class, String.class).get(0);
+        String email = row.get("email");
+        String rawPassword = row.get("password");
 
-	        // If placeholder, resolve from JSON
-	        String resolvedPassword = rawPassword.equals("{password}")
-	                ? TestDataUtil.getPassword(email)
-	                : rawPassword;
+        String resolvedPassword = TestDataResolver.resolvePassword(email, rawPassword, true);
 
-	        loginPage.enterEmail(email);
-	        loginPage.enterPassword(resolvedPassword);
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(resolvedPassword);
         }
-	}
 
 	@When("hit the Submit button")
 	public void hit_the_submit_button() {

@@ -14,7 +14,7 @@ Feature: To verify if the existing contact details in the list can modify/update
   Then user can edit details of the chosen contact
   When user enter new name
   | firstName | lastName | country |
-  | Ivy Jemimah  | Pumadora | USA |
+  | Sample Edit  | ForLastName | CANADA |
   And hit the ediContact submit button
   Then user successfully edit the contact
   When hit Return to Contact button

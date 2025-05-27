@@ -1,7 +1,7 @@
-@tag
+@tag @login
 Feature: Test login functionality
 
-  @tag1
+  @tag1.1
   Scenario Outline: Verify if the user can log in using valid credentials.
     Given browser is open
     And user is on landing/log in page
@@ -15,43 +15,42 @@ Feature: Test login functionality
       | mamanya@gmail.com | {password} |
       | mamako@gmail.com  | {password} |
 
-  @tag2
+  @tag1.2
   Scenario Outline: Verify that the application not allows a user to log in with a valid email and incorrect password.
     Given browser is open
     And user is on landing/log in page
     When user enter a valid email "<email>"
     And user enter a invalid password "<password>"
     And hit Submit
-    Then the login fails and display an error message
+    Then the login fails and display an error message "Incorrect username or password"
 
     Examples: 
       | email             | password   |
       | mamanya@gmail.com | {password} |
       | mamako@gmail.com  | {password} |
 
-  @tag3
+  @tag1.3
   Scenario Outline: Verify that the application not allows a user to log in with a invalid email and correct password.
     Given browser is open
     And user is on landing/log in page
     When user enter a invalid email "<email>"
     And user enter a valid password "<password>"
     And hit Submit
-    Then the login fails and display an error message
+    Then the login fails and display an error message "Incorrect username or password"
 
     Examples: 
       | email                 | password   |
       | invaliduser@gmail.com | {password} |
-      
 
-  @tag4
+  @tag1.4
   Scenario Outline: Verify that the user is unable to log in with a blank or empty password field.
     Given browser is open
     And user is on landing/log in page
     When user enter a valid email "<email>"
     And user leave an empty password "<password>"
     And hit Submit
-    Then the login fails and display an error message
+    Then the login fails and display an error message "Incorrect username or password"
 
     Examples: 
-      | email               | password   |
-      | validuser@gmail.com | {empty} |
+      | email               | password |
+      | validuser@gmail.com | {empty}  |

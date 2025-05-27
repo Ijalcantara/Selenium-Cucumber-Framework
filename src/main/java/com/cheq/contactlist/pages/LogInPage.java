@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import com.cheq.contactlist.utils.ElementAssertUtil;
 import com.cheq.contactlist.utils.KeyboardActionUtil;
 import com.cheq.contactlist.utils.MouseActionUtil;
+import com.cheq.contactlist.utils.WaitUtil;
 
 public class LogInPage {
 	
@@ -17,14 +18,13 @@ public class LogInPage {
     private By EMAIL_INPUT = By.id("email");
     private By PASSWORD_INPUT = By.id("password");
     private By SUBMIT_BUTTON = By.id("submit");
-    private By ERROR_MESSAGE = By.id("error");
     private By LOGOUT_BUTTON = By.id("logout");
     private By SIGNUP_BUTTON = By.id("signup");
 
     public LogInPage(WebDriver driver) {
         this.driver = driver;
         this.mouseUtils = new MouseActionUtil(driver);
-        this.keyboardUtils = new KeyboardActionUtil(driver, 10); 
+        this.keyboardUtils = new KeyboardActionUtil(driver);
     }
 
     public void enterEmail(String email) {
@@ -52,61 +52,26 @@ public class LogInPage {
     }
 
     public void clickLogOutButton() {
-        WebElement logoutButton = driver.findElement(LOGOUT_BUTTON);
-        logoutButton.click();
+        mouseUtils.click(LOGOUT_BUTTON);
     }
 
-    /** Verifies that the submit button is enabled */
     public void verifySubmitButtonIsEnabled() {
-        WebElement submitButton = driver.findElement(SUBMIT_BUTTON);
-        ElementAssertUtil.assertTrue(submitButton.isEnabled(), "Submit button should be enabled");
+        ElementAssertUtil.assertSubmitButtonEnabled(driver, SUBMIT_BUTTON);
     }
 
-    /** Verifies that the email field is displayed */
     public void verifyEmailFieldPresent() {
-        WebElement emailField = driver.findElement(EMAIL_INPUT);
-        ElementAssertUtil.assertElementDisplayed(emailField, "Email input field");
+    	ElementAssertUtil.assertEmailFieldDisplayed(driver, EMAIL_INPUT);
     }
 
-    /** Verifies that the password field is displayed */
     public void verifyPasswordFieldPresent() {
-        WebElement passwordField = driver.findElement(PASSWORD_INPUT);
-        ElementAssertUtil.assertElementDisplayed(passwordField, "Password input field");
+    	ElementAssertUtil.assertPasswordFieldDisplayed(driver, PASSWORD_INPUT);
     }
 
-    /** Verifies that the sign-up button is visible */
     public void verifySignUpButtonVisible() {
-        WebElement signUpBtn = driver.findElement(SIGNUP_BUTTON);
-        ElementAssertUtil.assertElementDisplayed(signUpBtn, "Sign up button");
-    }
-
-    /** Verifies that logout button is visible */
-    public void verifyLogoutButtonVisible() {
-        WebElement logoutBtn = driver.findElement(LOGOUT_BUTTON);
-        ElementAssertUtil.assertElementDisplayed(logoutBtn, "Logout button");
+        ElementAssertUtil.assertSignupButtonEnabled(driver, SIGNUP_BUTTON);
     }
     
     public void verifyErrorMessageDisplayed(String expectedText) {
-        String actualMessage = getErrorMessageText();
-        ElementAssertUtil.assertFalse(actualMessage.contains(expectedText),
-            "Expected error message to contain: '" + expectedText + "' but got: '" + actualMessage + "'");
-    }
-
-    // Getters
-    public WebElement getErrorMessageElement() {
-        return driver.findElement(ERROR_MESSAGE);
-    }
-    
-    public By getErrorMessageLocator() {
-        return ERROR_MESSAGE;
-    }
-
-    public String getErrorMessageText() {
-        try {
-            WebElement errorElement = driver.findElement(ERROR_MESSAGE);
-            return errorElement.getText().trim();
-        } catch (Exception e) {
-            return null;
-        }
+        ElementAssertUtil.assertErrorMessageContains(driver, expectedText);
     }
 }
