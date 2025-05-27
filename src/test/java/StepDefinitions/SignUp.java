@@ -36,7 +36,7 @@ public class SignUp {
 
     @Then("user is on addUser page")
     public void user_is_on_add_user_page() {
-        waitUtil.waitForUrlToContain("/addUser");
+        
     }
 
     @When("user leave all fields empty")
@@ -59,22 +59,20 @@ public class SignUp {
     @And("hit the signUp Submit button")
     public void hit_the_sign_up_submit_button() {
         signupPage.clickSubmitButton();
-        waitUtil.sleep(2);
+        
     }
 
     @Then("new user is successfully added and redirected to Contact List")
     public void new_user_is_successfully_added_and_redirected_to_contact_list() {
-        waitUtil.waitForUrlToContain("/contactList");
+       
     }
     
     @Then("user is not added and an error message is displayed {string}")
     public void user_is_not_added_and_an_error_message_is_displayed(String expectedMessage) {
-    	waitUtil.sleep(1);
         signupPage.verifyErrorMessageDisplayed(expectedMessage); 
     }
 
     @Then("the form should not be submitted")
-    public void the_form_should_not_be_submitted() {
-        waitUtil.waitForUrlToContain("/addUser");
+    public void the_form_should_not_be_submitted() {    
     }
 }

@@ -50,7 +50,6 @@ public class AddNewContact {
 
 	@Then("user is navigated in the ContactList page")
 	public void user_is_navigated_in_the_contact_list_page() {
-		waitUtil.pause(2);
 		boolean redirected = waitUtil.waitForUrlToContain("/contactList");
 	}
 

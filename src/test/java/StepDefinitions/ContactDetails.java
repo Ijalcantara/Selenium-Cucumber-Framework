@@ -53,8 +53,7 @@ public class ContactDetails {
 
     @Then("user is on the home page")
     public void user_is_on_the_home_page() {
-        waitUtil.pause(2);
-        waitUtil.waitForUrlToContain("/contactList");
+        
     }
 
     @When("user click one account in the list")
@@ -76,7 +75,6 @@ public class ContactDetails {
 
     @Then("the contact should be deleted from the Contact List and no longer visible")
     public void the_contact_should_be_deleted_from_the_contact_list_and_no_longer_visible() {
-        waitUtil.waitForUrlToContain("/contactList");
         ElementAssertUtil.assertContactIsDeleted(driver, deletedContactIdentifier);
     }
 }

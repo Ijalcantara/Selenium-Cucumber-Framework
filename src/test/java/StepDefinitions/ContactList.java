@@ -49,7 +49,6 @@ public class ContactList {
 
 	@Then("user is redirected to contact details page.")
 	public void user_is_redirected_to_contact_details_page() {
-		waitUtil.pause(2);
 		boolean redirected = waitUtil.waitForUrlToContain("/contactList");
 	}
 }

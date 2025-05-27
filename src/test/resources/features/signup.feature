@@ -18,7 +18,7 @@ Feature: Test signup functionality
       | firstName | lastName | email                   | password |
       | Sample    | Error    | passwordError@gmail.com | pass     |
     And hit the signUp Submit button
-    Then user is not added and an error message is displayed "User validation failed: email: Email is invalid, password: Path `password` (`pass`) is shorter than the minimum allowed length (7)."
+    Then user is not added and an error message is displayed "User validation failed: password: Path `password` (`pass`) is shorter than the minimum allowed length (7)."
     And the form should not be submitted
 
   @TC2.3

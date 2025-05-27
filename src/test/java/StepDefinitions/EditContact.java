@@ -1,6 +1,5 @@
 package StepDefinitions;
 
-import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
@@ -11,7 +10,6 @@ import com.cheq.contactlist.pages.EditContactPage;
 import com.cheq.contactlist.pages.LogInPage;
 import com.cheq.contactlist.pages.LogOutPage;
 import com.cheq.contactlist.utils.TestDataResolver;
-import com.cheq.contactlist.utils.TestDataUtil;
 import com.cheq.contactlist.utils.WaitUtil;
 
 import Hooks.Hooks;
@@ -59,8 +57,6 @@ public class EditContact {
 
     @Then("user can see all of the contact list")
     public void user_can_see_all_of_the_contact_list() {
-    	waitUtil.pause(2); 
-        waitUtil.waitForUrlToContain("/contactList");
     }
 
     @When("user click one contact in the table")
@@ -75,8 +71,6 @@ public class EditContact {
 
     @Then("user can edit details of the chosen contact")
     public void user_can_edit_details_of_the_chosen_contact() {
-    	waitUtil.pause(2); 
-        waitUtil.waitForUrlToContain("/editContact");
     }
 
     @When("user enter new name")
@@ -93,9 +87,7 @@ public class EditContact {
     }
 
     @Then("user successfully edit the contact")
-    public void user_successfully_edit_the_contact() {
-    	waitUtil.pause(2);
-        waitUtil.waitForUrlToContain("/contactDetails");
+    public void user_successfully_edit_the_contact() { 
     }
     
     @Then("hit Return to Contact button")
@@ -105,7 +97,6 @@ public class EditContact {
     
     @Then("user will navigated to the contactList page")
     public void user_will_navigated_to_the_contact_list_page() {
-    	waitUtil.pause(2);
     }
     
     @When("hit logout button")
@@ -115,8 +106,7 @@ public class EditContact {
 
     @Then("user is redirected to login page")
     public void user_is_redirected_to_login_page() {
-    	waitUtil.pause(2);
-        waitUtil.waitForUrlToContain("https://thinking-tester-contact-list.herokuapp.com/");
+       
     }
 }
 

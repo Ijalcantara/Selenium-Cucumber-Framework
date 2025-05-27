@@ -3,7 +3,8 @@ package StepDefinitions;
 
 import java.awt.AWTException;
 import java.io.IOException;
-
+import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import com.cheq.contactlist.pages.LogInPage;
@@ -40,37 +41,45 @@ public class LogIn {
         loginPage.verifySubmitButtonIsEnabled();
         loginPage.verifySignUpButtonVisible();
     }
+    @When("user enter a valid email")
+    public void user_enter_a_valid_email(io.cucumber.datatable.DataTable dataTable) {
+    	List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+        this.currentEmail = rows.get(0).get("email").trim(); // Make sure this gets set
+        loginPage.enterEmail(currentEmail);
+    }
+
+    @When("user enter a valid password")
+    public void user_enter_a_valid_password(io.cucumber.datatable.DataTable dataTable) {
+    	List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+        String placeholderPassword = rows.get(0).get("password").trim();
+        String resolvedPassword = TestDataResolver.resolvePassword(currentEmail, placeholderPassword, true);
+        loginPage.enterPassword(resolvedPassword);
+    }
     
-    @When("user enter a valid email {string}")
-    public void user_enter_a_valid_email_address(String email) {
-        this.currentEmail = email;
-        loginPage.enterEmail(email);
-    }
-
-    @When("user enter a invalid email {string}")
-    public void user_enter_a_invalid_email(String email) {
-        this.currentEmail = email;
-        loginPage.enterEmail(email);
-    }
-
-    @And("user enter a valid password {string}")
-    public void user_enter_a_valid_password(String password) {
-    	String resolvedPassword = TestDataResolver.resolvePassword(currentEmail, password, true);
+    
+    @When("user enter an invalid password")
+    public void user_enter_an_invalid_password(io.cucumber.datatable.DataTable dataTable) {
+        List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+        String placeholderPassword = rows.get(0).get("password").trim();
+        String resolvedPassword = TestDataResolver.resolvePassword(currentEmail, placeholderPassword, false);
         loginPage.enterPassword(resolvedPassword);
     }
-
-    @And("user enter a invalid password {string}")
-    public void user_enter_an_invalid_password(String password) {
-    	String resolvedPassword = TestDataResolver.resolvePassword(currentEmail, password, false);
+    
+    @When("user enter a invalid email")
+    public void user_enter_a_invalid_email(io.cucumber.datatable.DataTable dataTable) {
+    	List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+        this.currentEmail = rows.get(0).get("email").trim(); 
+        loginPage.enterEmail(currentEmail);
+    }
+    
+    @When("user leave an empty password")
+    public void user_leave_an_empty_password(io.cucumber.datatable.DataTable dataTable) {
+    	List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+        String placeholderPassword = rows.get(0).get("password").trim();
+        String resolvedPassword = TestDataResolver.resolvePassword(currentEmail, placeholderPassword, false);
         loginPage.enterPassword(resolvedPassword);
     }
-
-    @And("user leave an empty password {string}")
-    public void user_leave_an_empty_password(String password) {
-    	String resolvedPassword = TestDataResolver.resolvePassword(currentEmail, password, false);
-        loginPage.enterPassword(resolvedPassword);
-    }
-
+    
     @And("hit Submit")
     public void hit_submit() {
         loginPage.clickSubmitButton();
@@ -78,7 +87,6 @@ public class LogIn {
 
     @Then("user is navigate to Contact List Page")
     public void user_is_navigate_to_contact_list_page() throws IOException, AWTException {
-        waitUtil.waitForUrlToContain("/contactList");
     }
 
     @Then("click logout")

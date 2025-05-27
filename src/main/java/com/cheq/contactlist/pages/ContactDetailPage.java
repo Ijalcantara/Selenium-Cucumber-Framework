@@ -1,14 +1,9 @@
 package com.cheq.contactlist.pages;
 
-import java.util.List;
-
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 
-import com.cheq.contactlist.utils.KeyboardActionUtil;
 import com.cheq.contactlist.utils.MouseActionUtil;
 import com.cheq.contactlist.utils.WaitUtil;
 

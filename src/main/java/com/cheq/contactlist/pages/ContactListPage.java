@@ -2,7 +2,6 @@ package com.cheq.contactlist.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import com.cheq.contactlist.utils.KeyboardActionUtil;
 import com.cheq.contactlist.utils.MouseActionUtil;
