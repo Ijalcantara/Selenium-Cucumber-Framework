@@ -1,32 +1,37 @@
 package Hooks;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.cheq.contactlist.utils.ConfigReader;
 import com.cheq.contactlist.utils.DriverFactory;
+import com.cheq.contactlist.utils.LoggerUtil;  // <-- import your LoggerUtil
 import com.cheq.contactlist.utils.ReporterUtil;
 import com.cheq.contactlist.utils.ScreenshotUtil;
 import com.cheq.contactlist.utils.WaitUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
-
 public class Hooks {
+	
 	
 	private WebDriver driver;
     private WaitUtil waitUtil;
@@ -34,31 +39,37 @@ public class Hooks {
     private ConfigReader configReaderUtil;
     private String screenshotStatus;
     private int stepIndex = 1;
+    private static final String REPORT_FILE = "target/reports/scenario-results.json";
     private static ReporterUtil reporterUtil;
-    
-    @Before
-    public void setUp(Scenario scenario) throws IOException, InterruptedException {
-        System.out.println("Inside Hook - before scenario");
 
-        ReporterUtil.logInfo("🚀 STARTING SCENARIO: " + extractFeatureName(scenario) + " - " + scenario.getName());
-        ReporterUtil.logInfo("📌 Tags: " + scenario.getSourceTagNames());
-        
+
+    private static ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+
+    @Before
+    public void setUp(Scenario scenario) throws IOException {
+        String scenarioName = scenario.getName();
+
+        // Setup per-scenario logger
+        LoggerUtil.setupLogger(scenarioName);
+
+        LoggerUtil.logger.info("🚀 STARTING SCENARIO: " + extractFeatureName(scenario) + " - " + scenarioName);
+        LoggerUtil.logger.info("📌 Tags: " + scenario.getSourceTagNames());
+
         driver = DriverFactory.initDriver();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(40));
         waitUtil = new WaitUtil(driver);
 
         driver.navigate().to("https://thinking-tester-contact-list.herokuapp.com/");
-        ReporterUtil.logInfo("Navigated to home page.");
+        LoggerUtil.logger.info("Navigated to home page.");
 
         configReaderUtil = new ConfigReader();
         screenshotStatus = configReaderUtil.initProperty().getProperty("screenshot_status");
 
         screenshotUtil = new ScreenshotUtil(driver);
         String baseFolder = System.getProperty("user.dir") + "/screenshots";
+        screenshotUtil.initializeScenarioFolder(extractFeatureName(scenario), scenarioName, baseFolder);
 
-        screenshotUtil.initializeScenarioFolder(extractFeatureName(scenario), scenario.getName(), baseFolder);
-
-        stepIndex = 1; // Reset step count for new scenario
+        stepIndex = 1;
         screenshotUtil.resetCounter();
     }
 
@@ -66,81 +77,101 @@ public class Hooks {
     public void afterEachStep(Scenario scenario) {
         if (driver != null && "On".equalsIgnoreCase(screenshotStatus)) {
             try {
-                // Take screenshot with step count
-                screenshotUtil.takeFullScreenScreenshotWithRobot("Step_" + stepIndex++);
-                
-                String latestScreenshotFolder = screenshotUtil.getScenarioFolderPath();
-                if (latestScreenshotFolder != null) {
-                    Path path = Paths.get(latestScreenshotFolder);
-                    if (path.toFile().exists()) {
-                        String screenshotFileName = String.format("%02d_Step_%d_browser.png", stepIndex - 1, stepIndex - 1);
-                        Path screenshotPath = path.resolve(screenshotFileName);
-                        if (Files.exists(screenshotPath)) {
-                            byte[] screenshotBytes = Files.readAllBytes(screenshotPath);
-                            scenario.attach(screenshotBytes, "image/png", "Step " + (stepIndex - 1));
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                ReporterUtil.logWarn("⚠️ Failed to attach screenshot for step: " + e.getMessage());
+                screenshotUtil.takeFullScreenScreenshotWithRobot("Step_" + stepIndex);
+                attachLatestScreenshotToScenario(screenshotUtil.getScenarioFolderPath(), stepIndex, scenario);
+                LoggerUtil.logger.info("📝 Logged Step " + stepIndex + " for scenario: " + scenario.getName());
+                stepIndex++;
             } catch (Exception e) {
-                ReporterUtil.logWarn("⚠️ Error in after step hook: " + e.getMessage());
+                LoggerUtil.logger.warning("⚠️ Error capturing screenshot on step " + stepIndex + ": " + e.getMessage());
             }
+        }
+    }
+
+    private void attachLatestScreenshotToScenario(String folderPath, int stepNumber, Scenario scenario) throws IOException {
+        if (folderPath == null) return;
+        Path path = Paths.get(folderPath);
+        if (!Files.exists(path)) return;
+
+        String screenshotFileName = String.format("%02d_Step_%d_browser.png", stepNumber, stepNumber);
+        Path screenshotPath = path.resolve(screenshotFileName);
+
+        if (Files.exists(screenshotPath)) {
+            byte[] screenshotBytes = Files.readAllBytes(screenshotPath);
+            scenario.attach(screenshotBytes, "image/png", "Step " + stepNumber);
         }
     }
 
     @After
     public void tearDown(Scenario scenario) {
-        System.out.println("Inside Hook - after scenario");
+        LoggerUtil.logger.info("Inside Hook - after scenario: " + scenario.getName());
 
         if (driver != null) {
             try {
                 waitUtil.waitForElementToBeVisible(By.tagName("body"));
-                String scenarioName = scenario.getName();
 
                 if (scenario.isFailed()) {
-                    ReporterUtil.logError("❌ Scenario FAILED: " + scenarioName);
+                    LoggerUtil.logger.severe("❌ Scenario FAILED: " + scenario.getName());
 
                     try {
                         WebElement errorElement = driver.findElement(By.className("error"));
-                        // Take screenshot on failure
-                        screenshotUtil.takeFullScreenScreenshotWithRobot("Failed_" + scenarioName);
+                        screenshotUtil.takeFullScreenScreenshotWithRobot("Failed_" + scenario.getName());
                     } catch (NoSuchElementException e) {
-                        ReporterUtil.logWarn("⚠️ No error element found; taking fallback screenshot");
-                        screenshotUtil.takeFullScreenScreenshotWithRobot("Failed_" + scenarioName);
+                        LoggerUtil.logger.warning("⚠️ No error element found; taking fallback screenshot");
+                        screenshotUtil.takeFullScreenScreenshotWithRobot("Failed_" + scenario.getName());
                     }
+
                 } else {
-                    ReporterUtil.logInfo("✅ Scenario PASSED: " + scenarioName);
+                    LoggerUtil.logger.info("✅ Scenario PASSED: " + scenario.getName());
                 }
 
-                // Final screenshot after scenario
-                screenshotUtil.takeFullScreenScreenshotWithRobot("Final_" + scenarioName);
+                screenshotUtil.takeFullScreenScreenshotWithRobot("Final_" + scenario.getName());
 
             } catch (Exception e) {
-                ReporterUtil.logError("❌ Error during @After hook: " + e.getMessage());
+                LoggerUtil.logger.severe("❌ Error during @After hook: " + e.getMessage());
             } finally {
                 driver.quit();
             }
         }
 
-        saveScenarioResult(scenario);
+        try {
+            saveScenarioResult(scenario);
+        } catch (Exception e) {
+            LoggerUtil.logger.severe("❌ Failed to save scenario result: " + e.getMessage());
+        }
     }
 
-    private void saveScenarioResult(Scenario scenario) {
-        Map<String, Object> result = new HashMap<>();
-        result.put("scenarioName", scenario.getName());
-        result.put("status", scenario.getStatus().toString());
-        result.put("tags", scenario.getSourceTagNames());
+    private synchronized void saveScenarioResult(Scenario scenario) throws IOException {
+        File reportFile = new File(REPORT_FILE);
+        ArrayNode scenarioResults;
 
-        String fileName = "target/reports/scenario-result.json";
-
-        try (FileWriter fileWriter = new FileWriter(fileName)) {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, result);
-            System.out.println("Scenario result saved to: " + fileName);
-        } catch (IOException e) {
-            System.err.println("Failed to write scenario result: " + e.getMessage());
+        if (reportFile.exists()) {
+            scenarioResults = (ArrayNode) mapper.readTree(reportFile);
+        } else {
+            scenarioResults = mapper.createArrayNode();
         }
+
+        ObjectNode scenarioNode = mapper.createObjectNode();
+        scenarioNode.put("scenarioName", scenario.getName());
+        scenarioNode.put("featureName", extractFeatureName(scenario));
+        scenarioNode.put("status", scenario.getStatus().toString());
+        scenarioNode.put("timestamp", LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+
+        ArrayNode tagsNode = mapper.createArrayNode();
+        scenario.getSourceTagNames().forEach(tagsNode::add);
+        scenarioNode.set("tags", tagsNode);
+
+        scenarioResults.add(scenarioNode);
+
+        File parentDir = reportFile.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            parentDir.mkdirs();
+        }
+
+        try (FileWriter fileWriter = new FileWriter(reportFile)) {
+            mapper.writeValue(fileWriter, scenarioResults);
+        }
+
+        LoggerUtil.info("Scenario result saved to: " + REPORT_FILE);
     }
 
     private String extractFeatureName(Scenario scenario) {
@@ -159,7 +190,8 @@ public class Hooks {
     public WaitUtil getWaitUtil() {
         return waitUtil;
     }
+    
     public static ReporterUtil getReporterUtil() {
-        return reporterUtil;
-    }
+      return reporterUtil;
+  }
    }

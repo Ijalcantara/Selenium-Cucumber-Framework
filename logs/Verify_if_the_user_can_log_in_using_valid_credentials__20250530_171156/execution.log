@@ -1,0 +1,324 @@
+2025-05-30 17:11:56,432 - INFO - ------------------------------------------------
+2025-05-30 17:11:56,433 - INFO - ` Start of Test `
+2025-05-30 17:11:56,434 - INFO - ------------------------------------------------
+2025-05-30 17:11:56,435 - INFO - ` Date : May 30, 2025 05:11 PM `
+2025-05-30 17:11:56,435 - INFO - ` Scenario : Verify if the user can log in using valid credentials. `
+2025-05-30 17:11:56,436 - INFO - ------------------------------------------------
+2025-05-30 17:11:56,437 - INFO - 🚀 STARTING SCENARIO: Login - Verify if the user can log in using valid credentials.
+2025-05-30 17:11:56,438 - INFO - 📌 Tags: [@tag, @loginui, @ui, @tag1.1]
+2025-05-30 17:11:59,272 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:00,849 - INFO - Navigated to home page.
+2025-05-30 17:12:00,870 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:00,871 - INFO - Utility class [%s] initialized successfully with timeout: %s seconds | Details: MouseActionUtil
+2025-05-30 17:12:01,088 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:01,089 - INFO - Utility class [KeyboardActionUtil] initialized successfully with timeout: 10 seconds | Details: initialize
+2025-05-30 17:12:01,330 - INFO - 📝 Logged Step 1 for scenario: Verify if the user can log in using valid credentials.
+2025-05-30 17:12:01,532 - INFO - 📝 Logged Step 2 for scenario: Verify if the user can log in using valid credentials.
+2025-05-30 17:12:01,540 - INFO - Started action: [wait for element to be visible] on: {By.id: email}
+2025-05-30 17:12:01,566 - INFO - Element visible: {By.id: email}
+2025-05-30 17:12:01,624 - INFO - Started action: [wait for element to be visible] on: {By.id: email}
+2025-05-30 17:12:01,640 - INFO - Element visible: {By.id: email}
+2025-05-30 17:12:01,689 - INFO - Cleared field successfully on: {By.id: email} | Details: By.id: email
+2025-05-30 17:12:01,821 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:01,950 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:02,099 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:02,227 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:02,353 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:02,474 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:02,604 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:02,729 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:02,856 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:02,989 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:03,114 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:03,242 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:03,384 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:03,512 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:03,654 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:03,785 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:03,915 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:04,023 - INFO - Typed text [mamanya@gmail.com] successfully on: {By.id: email} | Details: By.id: email
+2025-05-30 17:12:04,375 - INFO - 📝 Logged Step 3 for scenario: Verify if the user can log in using valid credentials.
+2025-05-30 17:12:04,384 - INFO - Started action: [wait for element to be visible] on: {By.id: password}
+2025-05-30 17:12:04,405 - INFO - Element visible: {By.id: password}
+2025-05-30 17:12:04,443 - INFO - Started action: [wait for element to be visible] on: {By.id: password}
+2025-05-30 17:12:04,459 - INFO - Element visible: {By.id: password}
+2025-05-30 17:12:04,499 - INFO - Cleared field successfully on: {By.id: password} | Details: By.id: password
+2025-05-30 17:12:04,641 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:04,792 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:04,935 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:05,079 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:05,263 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:05,392 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:05,584 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:05,724 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:05,895 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:06,056 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:06,211 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:06,322 - INFO - Typed text [password123] successfully on: {By.id: password} | Details: By.id: password
+2025-05-30 17:12:06,566 - INFO - 📝 Logged Step 4 for scenario: Verify if the user can log in using valid credentials.
+2025-05-30 17:12:06,569 - INFO - Started action: [wait for element to be clickable] on: {By.id: submit}
+2025-05-30 17:12:06,596 - INFO - Element clickable: {By.id: submit}
+2025-05-30 17:12:06,747 - INFO - Action [%s] performed successfully on: {%s} | Details: click: By.id: submit
+2025-05-30 17:12:06,984 - INFO - 📝 Logged Step 5 for scenario: Verify if the user can log in using valid credentials.
+2025-05-30 17:12:07,109 - INFO - 📝 Logged Step 6 for scenario: Verify if the user can log in using valid credentials.
+2025-05-30 17:12:07,110 - INFO - Inside Hook - after scenario: Verify if the user can log in using valid credentials.
+2025-05-30 17:12:07,112 - INFO - Started action: [wait for element to be visible] on: {By.tagName: body}
+2025-05-30 17:12:07,698 - INFO - Element visible: {By.tagName: body}
+2025-05-30 17:12:07,700 - INFO - ✅ Scenario PASSED: Verify if the user can log in using valid credentials.
+2025-05-30 17:12:08,127 - INFO - Scenario result saved to: target/reports/scenario-results.json
+2025-05-30 17:12:08,149 - INFO - 🚀 STARTING SCENARIO: Login - Verify that the application not allows a user to log in with a valid email and incorrect password.
+2025-05-30 17:12:08,150 - INFO - 📌 Tags: [@tag, @loginui, @ui, @tag1.2]
+2025-05-30 17:12:09,602 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:11,001 - INFO - Navigated to home page.
+2025-05-30 17:12:11,009 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:11,010 - INFO - Utility class [%s] initialized successfully with timeout: %s seconds | Details: MouseActionUtil
+2025-05-30 17:12:11,229 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:11,229 - INFO - Utility class [KeyboardActionUtil] initialized successfully with timeout: 10 seconds | Details: initialize
+2025-05-30 17:12:11,476 - INFO - 📝 Logged Step 1 for scenario: Verify that the application not allows a user to log in with a valid email and incorrect password.
+2025-05-30 17:12:11,677 - INFO - 📝 Logged Step 2 for scenario: Verify that the application not allows a user to log in with a valid email and incorrect password.
+2025-05-30 17:12:11,680 - INFO - Started action: [wait for element to be visible] on: {By.id: email}
+2025-05-30 17:12:11,700 - INFO - Element visible: {By.id: email}
+2025-05-30 17:12:11,749 - INFO - Started action: [wait for element to be visible] on: {By.id: email}
+2025-05-30 17:12:11,769 - INFO - Element visible: {By.id: email}
+2025-05-30 17:12:11,811 - INFO - Cleared field successfully on: {By.id: email} | Details: By.id: email
+2025-05-30 17:12:11,963 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:12,089 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:12,290 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:12,432 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:12,564 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:12,686 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:12,828 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:12,969 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:13,119 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:13,266 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:13,401 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:13,535 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:13,692 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:13,832 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:13,962 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:14,100 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:14,249 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:14,350 - INFO - Typed text [mamanya@gmail.com] successfully on: {By.id: email} | Details: By.id: email
+2025-05-30 17:12:14,578 - INFO - 📝 Logged Step 3 for scenario: Verify that the application not allows a user to log in with a valid email and incorrect password.
+2025-05-30 17:12:14,579 - INFO - Started action: [wait for element to be visible] on: {By.id: password}
+2025-05-30 17:12:14,596 - INFO - Element visible: {By.id: password}
+2025-05-30 17:12:14,632 - INFO - Started action: [wait for element to be visible] on: {By.id: password}
+2025-05-30 17:12:14,651 - INFO - Element visible: {By.id: password}
+2025-05-30 17:12:14,690 - INFO - Cleared field successfully on: {By.id: password} | Details: By.id: password
+2025-05-30 17:12:14,830 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:14,959 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:15,093 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:15,234 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:15,383 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:15,532 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:15,671 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:15,808 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:15,947 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:16,085 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:16,198 - INFO - Typed text [wrongpass1] successfully on: {By.id: password} | Details: By.id: password
+2025-05-30 17:12:16,429 - INFO - 📝 Logged Step 4 for scenario: Verify that the application not allows a user to log in with a valid email and incorrect password.
+2025-05-30 17:12:16,430 - INFO - Started action: [wait for element to be clickable] on: {By.id: submit}
+2025-05-30 17:12:16,458 - INFO - Element clickable: {By.id: submit}
+2025-05-30 17:12:16,596 - INFO - Action [%s] performed successfully on: {%s} | Details: click: By.id: submit
+2025-05-30 17:12:16,826 - INFO - 📝 Logged Step 5 for scenario: Verify that the application not allows a user to log in with a valid email and incorrect password.
+2025-05-30 17:12:16,830 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:16,830 - INFO - Started action: [wait for element to be visible] on: {By.id: error}
+2025-05-30 17:12:17,380 - INFO - Element visible: {By.id: error}
+2025-05-30 17:12:17,502 - INFO - 📝 Logged Step 6 for scenario: Verify that the application not allows a user to log in with a valid email and incorrect password.
+2025-05-30 17:12:17,502 - INFO - Inside Hook - after scenario: Verify that the application not allows a user to log in with a valid email and incorrect password.
+2025-05-30 17:12:17,503 - INFO - Started action: [wait for element to be visible] on: {By.tagName: body}
+2025-05-30 17:12:17,521 - INFO - Element visible: {By.tagName: body}
+2025-05-30 17:12:17,521 - INFO - ✅ Scenario PASSED: Verify that the application not allows a user to log in with a valid email and incorrect password.
+2025-05-30 17:12:17,827 - INFO - Scenario result saved to: target/reports/scenario-results.json
+2025-05-30 17:12:17,831 - INFO - 🚀 STARTING SCENARIO: Login - Verify that the application not allows a user to log in with a invalid email and correct password.
+2025-05-30 17:12:17,833 - INFO - 📌 Tags: [@tag, @loginui, @ui, @tag1.3]
+2025-05-30 17:12:19,110 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:20,554 - INFO - Navigated to home page.
+2025-05-30 17:12:20,561 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:20,561 - INFO - Utility class [%s] initialized successfully with timeout: %s seconds | Details: MouseActionUtil
+2025-05-30 17:12:20,759 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:20,759 - INFO - Utility class [KeyboardActionUtil] initialized successfully with timeout: 10 seconds | Details: initialize
+2025-05-30 17:12:21,006 - INFO - 📝 Logged Step 1 for scenario: Verify that the application not allows a user to log in with a invalid email and correct password.
+2025-05-30 17:12:21,182 - INFO - 📝 Logged Step 2 for scenario: Verify that the application not allows a user to log in with a invalid email and correct password.
+2025-05-30 17:12:21,184 - INFO - Started action: [wait for element to be visible] on: {By.id: email}
+2025-05-30 17:12:21,199 - INFO - Element visible: {By.id: email}
+2025-05-30 17:12:21,244 - INFO - Started action: [wait for element to be visible] on: {By.id: email}
+2025-05-30 17:12:21,259 - INFO - Element visible: {By.id: email}
+2025-05-30 17:12:21,297 - INFO - Cleared field successfully on: {By.id: email} | Details: By.id: email
+2025-05-30 17:12:21,439 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:21,578 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:21,725 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:21,857 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:22,127 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:22,285 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:22,412 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:22,566 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:22,707 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:22,838 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:22,977 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:23,126 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:23,270 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:23,410 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:23,556 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:23,686 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:23,817 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:23,957 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:24,082 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:24,216 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:24,355 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:24,458 - INFO - Typed text [invaliduser@gmail.com] successfully on: {By.id: email} | Details: By.id: email
+2025-05-30 17:12:24,664 - INFO - 📝 Logged Step 3 for scenario: Verify that the application not allows a user to log in with a invalid email and correct password.
+2025-05-30 17:12:24,665 - INFO - Started action: [wait for element to be visible] on: {By.id: password}
+2025-05-30 17:12:24,680 - INFO - Element visible: {By.id: password}
+2025-05-30 17:12:24,717 - INFO - Started action: [wait for element to be visible] on: {By.id: password}
+2025-05-30 17:12:24,754 - INFO - Element visible: {By.id: password}
+2025-05-30 17:12:24,792 - INFO - Cleared field successfully on: {By.id: password} | Details: By.id: password
+2025-05-30 17:12:24,932 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:25,073 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:25,205 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:25,342 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:25,494 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:25,628 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:25,766 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:25,910 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:26,049 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:26,188 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:26,322 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:26,424 - INFO - Typed text [password123] successfully on: {By.id: password} | Details: By.id: password
+2025-05-30 17:12:26,663 - INFO - 📝 Logged Step 4 for scenario: Verify that the application not allows a user to log in with a invalid email and correct password.
+2025-05-30 17:12:26,664 - INFO - Started action: [wait for element to be clickable] on: {By.id: submit}
+2025-05-30 17:12:26,684 - INFO - Element clickable: {By.id: submit}
+2025-05-30 17:12:26,813 - INFO - Action [%s] performed successfully on: {%s} | Details: click: By.id: submit
+2025-05-30 17:12:27,047 - INFO - 📝 Logged Step 5 for scenario: Verify that the application not allows a user to log in with a invalid email and correct password.
+2025-05-30 17:12:27,050 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:27,050 - INFO - Started action: [wait for element to be visible] on: {By.id: error}
+2025-05-30 17:12:27,598 - INFO - Element visible: {By.id: error}
+2025-05-30 17:12:27,714 - INFO - 📝 Logged Step 6 for scenario: Verify that the application not allows a user to log in with a invalid email and correct password.
+2025-05-30 17:12:27,714 - INFO - Inside Hook - after scenario: Verify that the application not allows a user to log in with a invalid email and correct password.
+2025-05-30 17:12:27,714 - INFO - Started action: [wait for element to be visible] on: {By.tagName: body}
+2025-05-30 17:12:27,747 - INFO - Element visible: {By.tagName: body}
+2025-05-30 17:12:27,748 - INFO - ✅ Scenario PASSED: Verify that the application not allows a user to log in with a invalid email and correct password.
+2025-05-30 17:12:28,019 - INFO - Scenario result saved to: target/reports/scenario-results.json
+2025-05-30 17:12:28,024 - INFO - 🚀 STARTING SCENARIO: Login - Verify that the user is unable to log in with a blank or empty password field.
+2025-05-30 17:12:28,024 - INFO - 📌 Tags: [@tag, @loginui, @ui, @tag1.4]
+2025-05-30 17:12:29,249 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:30,876 - INFO - Navigated to home page.
+2025-05-30 17:12:30,881 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:30,881 - INFO - Utility class [%s] initialized successfully with timeout: %s seconds | Details: MouseActionUtil
+2025-05-30 17:12:31,008 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:31,009 - INFO - Utility class [KeyboardActionUtil] initialized successfully with timeout: 10 seconds | Details: initialize
+2025-05-30 17:12:31,243 - INFO - 📝 Logged Step 1 for scenario: Verify that the user is unable to log in with a blank or empty password field.
+2025-05-30 17:12:31,405 - INFO - 📝 Logged Step 2 for scenario: Verify that the user is unable to log in with a blank or empty password field.
+2025-05-30 17:12:31,406 - INFO - Started action: [wait for element to be visible] on: {By.id: email}
+2025-05-30 17:12:31,421 - INFO - Element visible: {By.id: email}
+2025-05-30 17:12:31,465 - INFO - Started action: [wait for element to be visible] on: {By.id: email}
+2025-05-30 17:12:31,481 - INFO - Element visible: {By.id: email}
+2025-05-30 17:12:31,516 - INFO - Cleared field successfully on: {By.id: email} | Details: By.id: email
+2025-05-30 17:12:31,666 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:31,798 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:31,933 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:32,090 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:32,236 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:32,381 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:32,512 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:32,652 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:32,793 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:32,930 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:33,069 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:33,211 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:33,347 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:33,468 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:33,606 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:33,746 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:33,902 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:34,048 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:34,183 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:34,335 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:34,485 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:34,598 - INFO - Typed text [invaliduser@gmail.com] successfully on: {By.id: email} | Details: By.id: email
+2025-05-30 17:12:34,827 - INFO - 📝 Logged Step 3 for scenario: Verify that the user is unable to log in with a blank or empty password field.
+2025-05-30 17:12:34,828 - INFO - Started action: [wait for element to be visible] on: {By.id: password}
+2025-05-30 17:12:34,844 - INFO - Element visible: {By.id: password}
+2025-05-30 17:12:34,885 - INFO - Started action: [wait for element to be visible] on: {By.id: password}
+2025-05-30 17:12:34,900 - INFO - Element visible: {By.id: password}
+2025-05-30 17:12:34,966 - INFO - Cleared field successfully on: {By.id: password} | Details: By.id: password
+2025-05-30 17:12:35,085 - INFO - Typed text [] successfully on: {By.id: password} | Details: By.id: password
+2025-05-30 17:12:35,307 - INFO - 📝 Logged Step 4 for scenario: Verify that the user is unable to log in with a blank or empty password field.
+2025-05-30 17:12:35,308 - INFO - Started action: [wait for element to be clickable] on: {By.id: submit}
+2025-05-30 17:12:35,327 - INFO - Element clickable: {By.id: submit}
+2025-05-30 17:12:35,452 - INFO - Action [%s] performed successfully on: {%s} | Details: click: By.id: submit
+2025-05-30 17:12:35,684 - INFO - 📝 Logged Step 5 for scenario: Verify that the user is unable to log in with a blank or empty password field.
+2025-05-30 17:12:35,686 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:35,687 - INFO - Started action: [wait for element to be visible] on: {By.id: error}
+2025-05-30 17:12:36,225 - INFO - Element visible: {By.id: error}
+2025-05-30 17:12:36,337 - INFO - 📝 Logged Step 6 for scenario: Verify that the user is unable to log in with a blank or empty password field.
+2025-05-30 17:12:36,338 - INFO - Inside Hook - after scenario: Verify that the user is unable to log in with a blank or empty password field.
+2025-05-30 17:12:36,338 - INFO - Started action: [wait for element to be visible] on: {By.tagName: body}
+2025-05-30 17:12:36,357 - INFO - Element visible: {By.tagName: body}
+2025-05-30 17:12:36,357 - INFO - ✅ Scenario PASSED: Verify that the user is unable to log in with a blank or empty password field.
+2025-05-30 17:12:36,661 - INFO - Scenario result saved to: target/reports/scenario-results.json
+2025-05-30 17:12:36,663 - INFO - 🚀 STARTING SCENARIO: Login - Verify if the user can log in using valid credentials created in the API
+2025-05-30 17:12:36,663 - INFO - 📌 Tags: [@tag, @loginui, @ui, @tag1.5]
+2025-05-30 17:12:37,858 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:39,476 - INFO - Navigated to home page.
+2025-05-30 17:12:39,481 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:39,481 - INFO - Utility class [%s] initialized successfully with timeout: %s seconds | Details: MouseActionUtil
+2025-05-30 17:12:39,649 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:12:39,649 - INFO - Utility class [KeyboardActionUtil] initialized successfully with timeout: 10 seconds | Details: initialize
+2025-05-30 17:12:39,883 - INFO - 📝 Logged Step 1 for scenario: Verify if the user can log in using valid credentials created in the API
+2025-05-30 17:12:40,049 - INFO - 📝 Logged Step 2 for scenario: Verify if the user can log in using valid credentials created in the API
+2025-05-30 17:12:40,050 - INFO - Started action: [wait for element to be visible] on: {By.id: email}
+2025-05-30 17:12:40,067 - INFO - Element visible: {By.id: email}
+2025-05-30 17:12:40,108 - INFO - Started action: [wait for element to be visible] on: {By.id: email}
+2025-05-30 17:12:40,123 - INFO - Element visible: {By.id: email}
+2025-05-30 17:12:40,162 - INFO - Cleared field successfully on: {By.id: email} | Details: By.id: email
+2025-05-30 17:12:40,309 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:40,440 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:40,573 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:40,713 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:40,851 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:40,986 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:41,112 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:41,248 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:41,398 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:41,539 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:41,662 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:41,801 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:41,931 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:42,085 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:42,219 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:42,362 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:42,503 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:42,663 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:42,812 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:42,948 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:43,058 - INFO - Typed text [mimaymoody@gmail.com] successfully on: {By.id: email} | Details: By.id: email
+2025-05-30 17:12:43,286 - INFO - 📝 Logged Step 3 for scenario: Verify if the user can log in using valid credentials created in the API
+2025-05-30 17:12:43,287 - INFO - Started action: [wait for element to be visible] on: {By.id: password}
+2025-05-30 17:12:43,301 - INFO - Element visible: {By.id: password}
+2025-05-30 17:12:43,341 - INFO - Started action: [wait for element to be visible] on: {By.id: password}
+2025-05-30 17:12:43,356 - INFO - Element visible: {By.id: password}
+2025-05-30 17:12:43,420 - INFO - Cleared field successfully on: {By.id: password} | Details: By.id: password
+2025-05-30 17:12:43,552 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:43,696 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:43,838 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:43,961 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:44,108 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:44,244 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:44,391 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:44,526 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:44,672 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:44,810 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:44,944 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:12:45,056 - INFO - Typed text [password123] successfully on: {By.id: password} | Details: By.id: password
+2025-05-30 17:12:45,278 - INFO - 📝 Logged Step 4 for scenario: Verify if the user can log in using valid credentials created in the API
+2025-05-30 17:12:45,279 - INFO - Started action: [wait for element to be clickable] on: {By.id: submit}
+2025-05-30 17:12:45,301 - INFO - Element clickable: {By.id: submit}
+2025-05-30 17:12:45,434 - INFO - Action [%s] performed successfully on: {%s} | Details: click: By.id: submit
+2025-05-30 17:12:45,662 - INFO - 📝 Logged Step 5 for scenario: Verify if the user can log in using valid credentials created in the API
+2025-05-30 17:12:45,764 - INFO - 📝 Logged Step 6 for scenario: Verify if the user can log in using valid credentials created in the API
+2025-05-30 17:12:45,764 - INFO - Inside Hook - after scenario: Verify if the user can log in using valid credentials created in the API
+2025-05-30 17:12:45,764 - INFO - Started action: [wait for element to be visible] on: {By.tagName: body}
+2025-05-30 17:12:45,784 - INFO - Element visible: {By.tagName: body}
+2025-05-30 17:12:45,784 - INFO - ✅ Scenario PASSED: Verify if the user can log in using valid credentials created in the API
+2025-05-30 17:12:46,084 - INFO - Scenario result saved to: target/reports/scenario-results.json

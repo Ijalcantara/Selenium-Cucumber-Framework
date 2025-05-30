@@ -1,0 +1,66 @@
+2025-05-30 17:15:37,334 - INFO - ------------------------------------------------
+2025-05-30 17:15:37,335 - INFO - ` Start of Test `
+2025-05-30 17:15:37,337 - INFO - ------------------------------------------------
+2025-05-30 17:15:37,337 - INFO - ` Date : May 30, 2025 05:15 PM `
+2025-05-30 17:15:37,338 - INFO - ` Scenario : Verify that the user can view the summary/list in the contact list. `
+2025-05-30 17:15:37,339 - INFO - ------------------------------------------------
+2025-05-30 17:15:37,340 - INFO - 🚀 STARTING SCENARIO: ContactList - Verify that the user can view the summary/list in the contact list.
+2025-05-30 17:15:37,342 - INFO - 📌 Tags: [@ui, @contactlist, @TC3.1]
+2025-05-30 17:15:40,931 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:15:42,464 - INFO - Navigated to home page.
+2025-05-30 17:15:42,490 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:15:42,491 - INFO - Utility class [%s] initialized successfully with timeout: %s seconds | Details: MouseActionUtil
+2025-05-30 17:15:42,680 - INFO - Utility class [WaitUtil] initialized successfully with timeout: 10 seconds
+2025-05-30 17:15:42,680 - INFO - Utility class [KeyboardActionUtil] initialized successfully with timeout: 10 seconds | Details: initialize
+2025-05-30 17:15:42,915 - INFO - 📝 Logged Step 1 for scenario: Verify that the user can view the summary/list in the contact list.
+2025-05-30 17:15:42,928 - INFO - Started action: [wait for element to be visible] on: {By.id: email}
+2025-05-30 17:15:42,989 - INFO - Element visible: {By.id: email}
+2025-05-30 17:15:43,066 - INFO - Started action: [wait for element to be visible] on: {By.id: email}
+2025-05-30 17:15:43,087 - INFO - Element visible: {By.id: email}
+2025-05-30 17:15:43,210 - INFO - Cleared field successfully on: {By.id: email} | Details: By.id: email
+2025-05-30 17:15:43,376 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:43,507 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:43,651 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:43,780 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:43,911 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:44,053 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:44,195 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:44,332 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:44,471 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:44,606 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:44,767 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:44,903 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:45,041 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:45,176 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:45,300 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:45,429 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:45,558 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:45,673 - INFO - Typed text [mamanya@gmail.com] successfully on: {By.id: email} | Details: By.id: email
+2025-05-30 17:15:45,784 - INFO - Started action: [wait for element to be visible] on: {By.id: password}
+2025-05-30 17:15:45,814 - INFO - Element visible: {By.id: password}
+2025-05-30 17:15:45,991 - INFO - Started action: [wait for element to be visible] on: {By.id: password}
+2025-05-30 17:15:46,034 - INFO - Element visible: {By.id: password}
+2025-05-30 17:15:46,103 - INFO - Cleared field successfully on: {By.id: password} | Details: By.id: password
+2025-05-30 17:15:46,246 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:46,372 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:46,497 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:46,635 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:46,770 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:46,903 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:47,042 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:47,180 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:47,323 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:47,459 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:47,607 - INFO - Sleeping for 100 milliseconds
+2025-05-30 17:15:47,711 - INFO - Typed text [password123] successfully on: {By.id: password} | Details: By.id: password
+2025-05-30 17:15:47,944 - INFO - 📝 Logged Step 2 for scenario: Verify that the user can view the summary/list in the contact list.
+2025-05-30 17:15:47,946 - INFO - Started action: [wait for element to be clickable] on: {By.id: submit}
+2025-05-30 17:15:47,989 - INFO - Element clickable: {By.id: submit}
+2025-05-30 17:15:48,151 - INFO - Action [%s] performed successfully on: {%s} | Details: click: By.id: submit
+2025-05-30 17:15:48,404 - INFO - 📝 Logged Step 3 for scenario: Verify that the user can view the summary/list in the contact list.
+2025-05-30 17:15:48,547 - INFO - 📝 Logged Step 4 for scenario: Verify that the user can view the summary/list in the contact list.
+2025-05-30 17:15:48,548 - INFO - Inside Hook - after scenario: Verify that the user can view the summary/list in the contact list.
+2025-05-30 17:15:48,548 - INFO - Started action: [wait for element to be visible] on: {By.tagName: body}
+2025-05-30 17:15:48,577 - INFO - Element visible: {By.tagName: body}
+2025-05-30 17:15:48,580 - INFO - ✅ Scenario PASSED: Verify that the user can view the summary/list in the contact list.
+2025-05-30 17:15:48,967 - INFO - Scenario result saved to: target/reports/scenario-results.json

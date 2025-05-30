@@ -4,12 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Utility class for centralized logging throughout the Contact List Automation framework.
@@ -18,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class LoggerUtil {
 
-	private static Logger logger;
+	public static Logger logger;
     private static FileHandler fileHandler;
     private static String BASE_LOG_FOLDER;
 
@@ -115,6 +118,11 @@ public class LoggerUtil {
         throw new RuntimeException(String.format("[%s] - %s", logLevel.toUpperCase(), formattedMsg));
     }
 
+    public static void info(String message) {
+        if (logger != null) {
+            logger.info(message);
+        }
+    }
     /**
      * Closes the logger and releases resources
      */
@@ -134,5 +142,83 @@ public class LoggerUtil {
             logger.info(String.format("` %s `", label));
         }
         logger.info(separator);
+    }
+    
+    public synchronized static void setupLogger(String scenarioName) {
+        if (logger != null) {
+            return; // Logger already initialized
+        }
+ 
+        try {
+            ConfigReader configReader = new ConfigReader();
+            Properties property = configReader.initProperty();
+            BASE_LOG_FOLDER = property.getProperty("logs_folder");
+ 
+            if (BASE_LOG_FOLDER == null || BASE_LOG_FOLDER.trim().isEmpty()) {
+                BASE_LOG_FOLDER = "target/logs"; // fallback path
+            }
+ 
+            String scenarioFolderPath = createLogFolder(scenarioName);
+            String logFilePath = scenarioFolderPath + File.separator + "execution.log";
+ 
+            logger = Logger.getLogger(LoggerUtil.class.getName());
+ 
+            // Remove existing handlers
+            for (Handler handler : logger.getHandlers()) {
+                logger.removeHandler(handler);
+            }
+ 
+            fileHandler = new FileHandler(logFilePath, true);
+            fileHandler.setFormatter(new Formatter() {
+                @Override
+                public String format(LogRecord record) {
+                    String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS").format(new Date(record.getMillis()));
+                    String logLevel = record.getLevel().getLocalizedName();
+                    String message = formatMessage(record);
+                    return String.format("%s - %s - %s%n", timestamp, logLevel, message);
+                }
+            });
+ 
+            logger.addHandler(fileHandler);
+            logger.setLevel(Level.ALL);
+ 
+            // Optional: also log to console
+            ConsoleHandler consoleHandler = new ConsoleHandler();
+            consoleHandler.setLevel(Level.ALL);
+            consoleHandler.setFormatter(new SimpleFormatter());
+            logger.addHandler(consoleHandler);
+ 
+            String formattedDate = new SimpleDateFormat("MMMM dd, yyyy hh:mm a").format(new Date());
+ 
+            logSeparator("Start of Test");
+            logger.info(String.format("` Date : %s `", formattedDate));
+            logger.info(String.format("` Scenario : %s `", scenarioName));
+            logSeparator("");
+ 
+        } catch (IOException e) {
+            System.err.println("Failed to initialize logger: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Creates a scenario-specific log folder with timestamp.
+     */
+    private static String createLogFolder(String scenarioName) {
+        if (scenarioName == null || scenarioName.trim().isEmpty()) {
+            scenarioName = "UnknownScenario";
+        }
+
+        scenarioName = scenarioName.replaceAll("[^a-zA-Z0-9-_]", "_");
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String folderName = scenarioName + "_" + timestamp;
+        String fullPath = BASE_LOG_FOLDER + File.separator + folderName;
+
+        File folder = new File(fullPath);
+        if (!folder.exists() && !folder.mkdirs()) {
+            throw new RuntimeException("Failed to create log directory: " + folder.getAbsolutePath());
+        }
+
+        return fullPath;
     }
 }

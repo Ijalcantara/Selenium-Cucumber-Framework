@@ -14,7 +14,7 @@ import io.cucumber.junit.Cucumber;
 	        "json:target/Reports/report.json",
 	        "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
 	    },
-	    tags = "@loginui",
+	    tags = "@contactlist",
 	    monochrome = true
 )
 public class TestRunner {}

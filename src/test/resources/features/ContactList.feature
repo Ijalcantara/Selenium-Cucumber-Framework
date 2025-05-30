@@ -1,4 +1,4 @@
-@ui
+@ui @contactlist
 Feature: Test contact list page functionality
 
   @TC3.1
