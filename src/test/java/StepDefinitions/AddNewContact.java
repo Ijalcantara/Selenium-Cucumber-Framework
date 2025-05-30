@@ -1,5 +1,6 @@
 package StepDefinitions;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
@@ -27,7 +28,7 @@ public class AddNewContact {
     private ContactListPage contactListPage;
     private AddContactPage addContact;
 
-    public AddNewContact(Hooks hooks) {
+    public AddNewContact(Hooks hooks) throws IOException {
         this.driver = hooks.getDriver();
         this.waitUtil = hooks.getWaitUtil();
         this.loginPage = new LogInPage(driver);
@@ -53,7 +54,6 @@ public class AddNewContact {
 
 	@Then("user is navigated in the ContactList page")
 	public void user_is_navigated_in_the_contact_list_page() {
-		boolean redirected = waitUtil.waitForUrlToContain("/contactList");
 	}
 
 	@When("hit the addNewContact button")
@@ -84,11 +84,10 @@ public class AddNewContact {
 	
 	@Then("new user is added in the contact list page")
 	public void new_user_is_added_in_the_contact_list_page() {
-		boolean redirected = waitUtil.waitForUrlToContain("/contactList");
 	}
 	
 	@Then("error occured and display error message {string}")
-	public void error_occured_and_display_error_message(String expectedMessage) {
+	public void error_occured_and_display_error_message(String expectedMessage) throws Exception {
 	    addContact.verifyErrorMessageDisplayed(expectedMessage); 
 	}
 }

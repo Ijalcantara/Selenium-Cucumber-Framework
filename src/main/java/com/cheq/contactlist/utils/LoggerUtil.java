@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Properties;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
@@ -86,11 +85,7 @@ public class LoggerUtil {
     /**
      * Logs a message with the specified log level and the predefined log message.
      */
-    public static void logMessage(String logLevel, String logMsg, Object... args) {
-        if (args != null && args.length > 0) {
-            logMsg = String.format(logMsg, args);
-        }
-
+    public static void logMessage(String logLevel, String logMsg) {
         if (logger != null) {
             switch (logLevel.toUpperCase()) {
                 case "INFO":
@@ -114,12 +109,10 @@ public class LoggerUtil {
      * Logs and throws a RuntimeException with the given log message and log level
      */
     public static void logAndThrow(String logLevel, String logMsg, Object... args) {
-        if (args != null && args.length > 0) {
-            logMsg = String.format(logMsg, args);
-        }
+        String formattedMsg = (args != null && args.length > 0) ? String.format(logMsg, args) : logMsg;
 
-        logMessage(logLevel, logMsg, args);
-        throw new RuntimeException(String.format("[%s] - %s", logLevel.toUpperCase(), logMsg));
+        logMessage(logLevel, formattedMsg); // ✅ already formatted
+        throw new RuntimeException(String.format("[%s] - %s", logLevel.toUpperCase(), formattedMsg));
     }
 
     /**

@@ -1,5 +1,6 @@
 package StepDefinitions;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
@@ -27,14 +28,14 @@ public class EditContact {
     private EditContactPage editContactPage;
     private ContactDetailPage contactDetail;
     private LogOutPage logout;
-
-    public EditContact(Hooks hooks) {
+    
+    public EditContact(Hooks hooks) throws IOException {
         this.driver = hooks.getDriver();
         this.waitUtil = hooks.getWaitUtil();
         this.loginPage = new LogInPage(driver);
-        this.contactListPage = new ContactListPage(driver,waitUtil);
-        this.editContactPage = new EditContactPage(driver);
-        this.contactDetail = new ContactDetailPage(driver, waitUtil);
+        this.contactListPage = new ContactListPage(driver, waitUtil);
+        this.editContactPage = new EditContactPage(driver, hooks.getReporterUtil()); 
+        this.contactDetail = new ContactDetailPage(driver, hooks.getReporterUtil());
         this.logout = new LogOutPage(driver);
     }
 

@@ -24,7 +24,7 @@ public class LogIn {
     private LogInPage loginPage;
     private String currentEmail;
 
-    public LogIn(Hooks hooks) {
+    public LogIn(Hooks hooks) throws IOException {
         this.driver = hooks.getDriver();
         this.waitUtil = hooks.getWaitUtil();
         this.loginPage = new LogInPage(driver); 
@@ -96,7 +96,7 @@ public class LogIn {
 
     
     @Then("the login fails and display an error message {string}")
-    public void the_login_fails_and_display_an_error_message(String expectedMessage) {
+    public void the_login_fails_and_display_an_error_message(String expectedMessage) throws Exception {
     	loginPage.verifyErrorMessageDisplayed(expectedMessage);
     }
 }

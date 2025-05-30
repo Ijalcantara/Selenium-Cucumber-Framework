@@ -1,11 +1,15 @@
 package com.cheq.contactlist.pages;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.cheq.contactlist.utils.ElementAssertUtil;
 import com.cheq.contactlist.utils.KeyboardActionUtil;
 import com.cheq.contactlist.utils.MouseActionUtil;
+import com.cheq.contactlist.utils.ReporterUtil;
+import com.cheq.contactlist.utils.ScreenshotUtil;
 
 public class AddContactPage {
 
@@ -13,10 +17,12 @@ public class AddContactPage {
     private MouseActionUtil mouseUtils;
     private KeyboardActionUtil keyboardUtils;
 
-    public AddContactPage(WebDriver driver) {
-        this.driver = driver;
-        this.mouseUtils = new MouseActionUtil(driver);
-        this.keyboardUtils = new KeyboardActionUtil(driver); 
+    public AddContactPage(WebDriver driver) throws IOException {
+    	this.driver = driver;
+        ScreenshotUtil screenshotUtil = new ScreenshotUtil(driver); 
+        ReporterUtil reporterUtil = new ReporterUtil(driver, screenshotUtil);
+        this.mouseUtils = new MouseActionUtil(driver, reporterUtil);
+        this.keyboardUtils = new KeyboardActionUtil(driver, screenshotUtil);
     }
 
     private By FIRST_NAME = By.id("firstName");
@@ -85,7 +91,7 @@ public class AddContactPage {
         mouseUtils.click(CANCEL_BUTTON);
     }
     
-    public void verifyErrorMessageDisplayed(String expectedText) {
+    public void verifyErrorMessageDisplayed(String expectedText) throws Exception {
     	ElementAssertUtil.assertErrorMessageContains(driver, expectedText);
     }  
 }

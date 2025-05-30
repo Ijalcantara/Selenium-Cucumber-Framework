@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
@@ -115,31 +116,43 @@ public class ReporterUtil {
 	        captureScreenshot = ConfigReader.get("screenshot_status");
 	    }
 
+	    public ScreenshotUtil getScreenshotUtil() {
+	        return this.screenshotUtil;
+	    }
+	    
 	    /** Captures a screenshot and logs a message for the given test step 
 	     * @throws AWTException */
 	    public void resultsReporter(By elementName, String logLevel, String logMsg, String elementDetails) throws IOException, AWTException {
-	     
+
 	        String stepName = getScreenshotDatetime();
-	        
+
+	        String combinedMessage = logMsg;
+	        if (elementDetails != null && !elementDetails.isEmpty()) {
+	            combinedMessage += " | Details: " + elementDetails;
+	        }
+
 	        if ("info".equalsIgnoreCase(logLevel)) {
-	            LoggerUtil.logMessage(logLevel, logMsg, elementDetails);
+	            LoggerUtil.logMessage(logLevel, combinedMessage);  // Only 2 args now
 	            if ("On".equalsIgnoreCase(captureScreenshot)) {
-	             screenshotUtil.takeFullScreenScreenshotWithRobot(stepName);
+	                screenshotUtil.takeFullScreenScreenshotWithRobot(stepName);
 	            }
 	        } else {
 	            if ("On".equalsIgnoreCase(captureScreenshot)) {
-	               screenshotUtil.takeFullScreenScreenshotWithRobot(stepName);
+	                screenshotUtil.takeFullScreenScreenshotWithRobot(stepName);
 	            }
 	            LoggerUtil.logAndThrow(logLevel, logMsg, elementDetails);
 	        }
-
 	    }
-	    
-	    /** Logs messages based on the log level for API calls. */
+
 	    public void resultsReporterAPI(String logLevel, String logMsg, String elementDetails) throws IOException {
-	     
+
+	        String combinedMessage = logMsg;
+	        if (elementDetails != null && !elementDetails.isEmpty()) {
+	            combinedMessage += " | Details: " + elementDetails;
+	        }
+
 	        if ("info".equalsIgnoreCase(logLevel)) {
-	            LoggerUtil.logMessage(logLevel, logMsg, elementDetails);
+	            LoggerUtil.logMessage(logLevel, combinedMessage);  // Only 2 args now
 	        } else {
 	            LoggerUtil.logAndThrow(logLevel, logMsg, elementDetails);
 	        }
@@ -154,5 +167,29 @@ public class ReporterUtil {
 	        String formattedTime = currentDateTime.format(timeFormatter);
 	        
 	        return "screenshot_" + formattedDate + "_" + formattedTime;
+	    }
+	    
+	    private static final Logger LOGGER = Logger.getLogger(ReporterUtil.class.getName());
+
+	    public static void logPass(String message) {
+	        LOGGER.log(Level.INFO, "PASS: " + message);
+	        // You can add integration with your report framework here if needed
+	    }
+
+	    public static void logFail(String message) {
+	        LOGGER.log(Level.SEVERE, "FAIL: " + message);
+	        // You can add screenshot capture or fail integration here
+	    }
+
+	    public static void logError(String message) {
+	        LOGGER.log(Level.SEVERE, "ERROR: " + message);
+	    }
+
+	    public static void logWarn(String message) {
+	        LOGGER.log(Level.WARNING, "WARN: " + message);
+	    }
+	    
+	    public static void logInfo(String message) {
+	        LOGGER.log(Level.INFO, "INFO: " + message);
 	    }
 }

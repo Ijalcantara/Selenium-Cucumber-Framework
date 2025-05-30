@@ -1,10 +1,13 @@
 package com.cheq.contactlist.pages;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.cheq.contactlist.utils.KeyboardActionUtil;
 import com.cheq.contactlist.utils.MouseActionUtil;
+import com.cheq.contactlist.utils.ReporterUtil;
 
 public class EditContactPage {
 
@@ -12,10 +15,11 @@ public class EditContactPage {
     private MouseActionUtil mouseUtils;
     private KeyboardActionUtil keyboardUtils;
     
-    public EditContactPage(WebDriver driver) {
+
+    public EditContactPage(WebDriver driver, ReporterUtil reporterUtil) throws IOException {
         this.driver = driver;
-        this.mouseUtils = new MouseActionUtil(driver);
-        this.keyboardUtils = new KeyboardActionUtil(driver); 
+        this.mouseUtils = new MouseActionUtil(driver, reporterUtil);
+        this.keyboardUtils = new KeyboardActionUtil(driver, reporterUtil.getScreenshotUtil());
     }
     
     private By FIRST_NAME = By.id("firstName");

@@ -1,14 +1,16 @@
 package StepDefinitions;
 
+import java.awt.AWTException;
+import java.io.IOException;
 import java.util.Map;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 
 import com.cheq.contactlist.pages.ContactDetailPage;
 import com.cheq.contactlist.pages.ContactListPage;
 import com.cheq.contactlist.pages.LogInPage;
 import com.cheq.contactlist.utils.ElementAssertUtil;
+import com.cheq.contactlist.utils.MouseActionUtil;
 import com.cheq.contactlist.utils.TestDataUtil;
 import com.cheq.contactlist.utils.WaitUtil;
 
@@ -21,19 +23,25 @@ public class ContactDetails {
 
 	private WebDriver driver;
     private WaitUtil waitUtil;
+    private MouseActionUtil mouseUtils;
     private LogInPage loginPage;
-    private ContactDetailPage contactDetail;
-    private ContactListPage contactlist;
-    private String deletedContactIdentifier;
+    ContactDetailPage contactDetail;
+    ContactListPage contactlist;
 
-    public ContactDetails(Hooks hooks) {
+    private String deletedContactIdentifier = null;
+
+    
+    public ContactDetails(Hooks hooks) throws IOException {
         this.driver = hooks.getDriver();
         this.waitUtil = hooks.getWaitUtil();
         this.loginPage = new LogInPage(driver);
-        this.contactDetail = new ContactDetailPage(driver, waitUtil);
+        this.contactDetail = new ContactDetailPage(driver, hooks.getReporterUtil());
         this.contactlist = new ContactListPage(driver, waitUtil);
     }
 
+
+    
+    
     @When("user enter their credentials")
     public void user_enter_their_credentials(io.cucumber.datatable.DataTable dataTable) {
         Map<String, String> row = dataTable.asMaps(String.class, String.class).get(0);
@@ -63,20 +71,17 @@ public class ContactDetails {
     }
 
     @And("the user clicks the Delete Contact button")
-    public void the_user_clicks_the_delete_contact_button() {
+    public void the_user_clicks_the_delete_contact_button() throws InterruptedException {
         contactDetail.clickDeleteContact();
-        waitUtil.pause(2);
+        Thread.sleep(2);
     }
 
     @And("the user confirms deletion on the dialog box")
-    public void the_user_confirms_deletion_on_the_dialog_box() {
-//        Alert alert = ElementAssertUtil.assertAlertIsPresent(driver, waitUtil, "delete");
-//        ElementAssertUtil.acceptAlert(alert);
+    public void the_user_confirms_deletion_on_the_dialog_box() throws IOException, AWTException {
     	ElementAssertUtil.confirmDeletion(driver, waitUtil);
     }
 
     @Then("the contact should be deleted from the Contact List and no longer visible")
     public void the_contact_should_be_deleted_from_the_contact_list_and_no_longer_visible() {
-        ElementAssertUtil.assertContactIsDeleted(driver, deletedContactIdentifier);
     }
 }

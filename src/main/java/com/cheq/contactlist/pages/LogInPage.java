@@ -1,11 +1,15 @@
 package com.cheq.contactlist.pages;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.cheq.contactlist.utils.ElementAssertUtil;
 import com.cheq.contactlist.utils.KeyboardActionUtil;
 import com.cheq.contactlist.utils.MouseActionUtil;
+import com.cheq.contactlist.utils.ReporterUtil;
+import com.cheq.contactlist.utils.ScreenshotUtil;
 
 public class LogInPage {
 	
@@ -19,10 +23,15 @@ public class LogInPage {
     private By LOGOUT_BUTTON = By.id("logout");
     private By SIGNUP_BUTTON = By.id("signup");
 
-    public LogInPage(WebDriver driver) {
+    
+    public LogInPage(WebDriver driver) throws IOException {
         this.driver = driver;
-        this.mouseUtils = new MouseActionUtil(driver);
-        this.keyboardUtils = new KeyboardActionUtil(driver);
+
+        ScreenshotUtil screenshotUtil = new ScreenshotUtil(driver);
+        ReporterUtil reporterUtil = new ReporterUtil(driver, screenshotUtil);
+
+        this.mouseUtils = new MouseActionUtil(driver, reporterUtil);
+        this.keyboardUtils = new KeyboardActionUtil(driver, screenshotUtil);
     }
 
     public void enterEmail(String email) {
@@ -69,7 +78,7 @@ public class LogInPage {
         ElementAssertUtil.assertSignupButtonEnabled(driver, SIGNUP_BUTTON);
     }
     
-    public void verifyErrorMessageDisplayed(String expectedText) {
+    public void verifyErrorMessageDisplayed(String expectedText) throws Exception {
         ElementAssertUtil.assertErrorMessageContains(driver, expectedText);
     }
 }

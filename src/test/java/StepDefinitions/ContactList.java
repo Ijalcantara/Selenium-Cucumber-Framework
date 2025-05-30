@@ -1,5 +1,6 @@
 package StepDefinitions;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
@@ -20,7 +21,7 @@ public class ContactList {
 	private WaitUtil waitUtil;
     private LogInPage loginPage;
 
-    public ContactList(Hooks hooks) {
+    public ContactList(Hooks hooks) throws IOException {
         this.driver = hooks.getDriver();
         this.waitUtil = hooks.getWaitUtil();
         this.loginPage = new LogInPage(driver);
@@ -49,6 +50,5 @@ public class ContactList {
 
 	@Then("user is redirected to contact details page.")
 	public void user_is_redirected_to_contact_details_page() {
-		boolean redirected = waitUtil.waitForUrlToContain("/contactList");
 	}
 }

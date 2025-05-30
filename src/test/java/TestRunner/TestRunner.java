@@ -6,14 +6,15 @@ import io.cucumber.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = "src/test/resources/apiFeature",
+		features = "src/test/resources/features",
 	    glue = {"StepDefinitions", "Hooks"},
 	    plugin = {
 	        "pretty",
-	        "html:target/Reports/report.html",
-	        "json:target/Reports/report.json" 
+	        "html:reports/extent_html/extent_report.html",
+	        "json:target/Reports/report.json",
+	        "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
 	    },
-	    tags = "@ui",
+	    tags = "@loginui",
 	    monochrome = true
 )
 public class TestRunner {}

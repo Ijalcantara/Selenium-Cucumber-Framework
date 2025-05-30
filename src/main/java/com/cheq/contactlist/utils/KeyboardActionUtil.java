@@ -1,5 +1,7 @@
 package com.cheq.contactlist.utils;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -11,48 +13,65 @@ import org.openqa.selenium.interactions.Actions;
  * Integrates with {@link WaitUtil} for synchronization and {@link ReporterUtil} for logging.
  */
 public class KeyboardActionUtil {
-
-    private WebDriver driver;
+	
+	private WebDriver driver;
     private Actions actions;
     private WaitUtil waitUtil;
+    private ReporterUtil reporterUtil;
     private int timeout;
 
-    public KeyboardActionUtil(WebDriver driver) {
+    public KeyboardActionUtil(WebDriver driver, ScreenshotUtil screenshotUtil) throws IOException {
         this.driver = driver;
         this.actions = new Actions(driver);
         this.waitUtil = new WaitUtil(driver);
         this.timeout = 10;
-        ReporterUtil.resultsReporter(null, LogLevel.INFO,
-            LogMessageUtil.initialized("KeyboardActionUtil", timeout),
-            "initialize",
-            "KeyboardActionUtil"
-        );
+        this.reporterUtil = new ReporterUtil(driver, screenshotUtil);
+
+        try {
+            reporterUtil.resultsReporter(null, LogLevel.INFO,
+                LogMessageUtil.initialized("KeyboardActionUtil", timeout),
+                "initialize");
+        } catch (Exception e) {
+            e.printStackTrace(); // optional
+        }
     }
 
     public void pressEnter() {
         try {
             actions.sendKeys(Keys.ENTER).perform();
-            ReporterUtil.resultsReporter(null, LogLevel.INFO, LogMessageUtil.pressKeySuccess("ENTER", "keyboard"), "press ENTER", "keyboard");
+            reporterUtil.resultsReporter(null, LogLevel.INFO, LogMessageUtil.pressKeySuccess("ENTER", "keyboard"), "press ENTER");
         } catch (Exception e) {
-            ReporterUtil.resultsReporter(null, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("ENTER", "keyboard"), "press ENTER", "keyboard");
+            try {
+                reporterUtil.resultsReporter(null, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("ENTER", "keyboard"), "press ENTER");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
     public void pressTab() {
         try {
             actions.sendKeys(Keys.TAB).perform();
-            ReporterUtil.resultsReporter(null, LogLevel.INFO, LogMessageUtil.pressKeySuccess("TAB", "keyboard"), "press TAB", "keyboard");
+            reporterUtil.resultsReporter(null, LogLevel.INFO, LogMessageUtil.pressKeySuccess("TAB", "keyboard"), "press TAB");
         } catch (Exception e) {
-            ReporterUtil.resultsReporter(null, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("TAB", "keyboard"), "press TAB", "keyboard");
+            try {
+                reporterUtil.resultsReporter(null, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("TAB", "keyboard"), "press TAB");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
     public void pressBackspace() {
         try {
             actions.sendKeys(Keys.BACK_SPACE).perform();
-            ReporterUtil.resultsReporter(null, LogLevel.INFO, LogMessageUtil.pressKeySuccess("BACKSPACE", "keyboard"), "press BACKSPACE", "keyboard");
+            reporterUtil.resultsReporter(null, LogLevel.INFO, LogMessageUtil.pressKeySuccess("BACKSPACE", "keyboard"), "press BACKSPACE");
         } catch (Exception e) {
-            ReporterUtil.resultsReporter(null, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("BACKSPACE", "keyboard"), "press BACKSPACE", "keyboard");
+            try {
+                reporterUtil.resultsReporter(null, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("BACKSPACE", "keyboard"), "press BACKSPACE");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -60,9 +79,13 @@ public class KeyboardActionUtil {
         try {
             WebElement element = waitUtil.waitForElementToBeVisible(locator);
             actions.moveToElement(element).click().keyDown(Keys.SHIFT).sendKeys(text).keyUp(Keys.SHIFT).perform();
-            ReporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.actionSuccess("type with SHIFT", locator), "type with SHIFT", locator.toString());
+            reporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.actionSuccess("type with SHIFT", locator), locator.toString());
         } catch (Exception e) {
-            ReporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.actionFail("type with SHIFT", locator), "type with SHIFT", locator.toString());
+            try {
+                reporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.actionFail("type with SHIFT", locator), locator.toString());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -71,9 +94,13 @@ public class KeyboardActionUtil {
             WebElement element = waitUtil.waitForElementToBeVisible(locator);
             element.click();
             actions.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(Keys.BACK_SPACE).perform();
-            ReporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.clearFieldSuccess(locator), "clear field using keyboard", locator.toString());
+            reporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.clearFieldSuccess(locator), locator.toString());
         } catch (Exception e) {
-            ReporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.clearFieldFailed(locator), "clear field using keyboard", locator.toString());
+            try {
+                reporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.clearFieldFailed(locator), locator.toString());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -88,21 +115,28 @@ public class KeyboardActionUtil {
                 element.sendKeys(Character.toString(ch));
                 waitUtil.sleep(100);
             }
-            ReporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.typeTextSuccess(text, locator) + " | Text: " + text, "type text", locator.toString());
+            reporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.typeTextSuccess(text, locator), locator.toString());
         } catch (Exception e) {
-            ReporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.typeTextFailed(text, locator), "type text", locator.toString());
+            try {
+                reporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.typeTextFailed(text, locator), locator.toString());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
-
 
     public void pressTabInElement(By locator) {
         try {
             WebElement element = waitUtil.waitForElementToBeVisible(locator);
             element.click();
             actions.sendKeys(Keys.TAB).perform();
-            ReporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.pressKeySuccess("TAB", locator), "press TAB", locator.toString());
+            reporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.pressKeySuccess("TAB", locator), locator.toString());
         } catch (Exception e) {
-            ReporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("TAB", locator), "press TAB", locator.toString());
+            try {
+                reporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("TAB", locator), locator.toString());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -111,9 +145,13 @@ public class KeyboardActionUtil {
             WebElement element = waitUtil.waitForElementToBeVisible(locator);
             element.click();
             actions.sendKeys(Keys.ENTER).perform();
-            ReporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.pressKeySuccess("ENTER", locator), "press ENTER", locator.toString());
+            reporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.pressKeySuccess("ENTER", locator), locator.toString());
         } catch (Exception e) {
-            ReporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("ENTER", locator), "press ENTER", locator.toString());
+            try {
+                reporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("ENTER", locator), locator.toString());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }

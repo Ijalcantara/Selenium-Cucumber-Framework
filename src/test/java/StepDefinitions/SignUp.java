@@ -1,5 +1,6 @@
 package StepDefinitions;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
@@ -22,7 +23,7 @@ public class SignUp {
     private SignUpPage signupPage;
     private LogInPage loginPage;
 
-    public SignUp(Hooks hooks) {
+    public SignUp(Hooks hooks) throws IOException {
         this.driver = hooks.getDriver();
         this.waitUtil = hooks.getWaitUtil();
         this.signupPage = new SignUpPage(driver);
@@ -68,7 +69,7 @@ public class SignUp {
     }
     
     @Then("user is not added and an error message is displayed {string}")
-    public void user_is_not_added_and_an_error_message_is_displayed(String expectedMessage) {
+    public void user_is_not_added_and_an_error_message_is_displayed(String expectedMessage) throws Exception {
         signupPage.verifyErrorMessageDisplayed(expectedMessage); 
     }
 

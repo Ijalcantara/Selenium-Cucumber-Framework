@@ -1,7 +1,5 @@
 package com.cheq.contactlist.utils;
 
-import org.openqa.selenium.By;
-
 /**
  * Utility class for generating consistent log messages across utilities.
  */
