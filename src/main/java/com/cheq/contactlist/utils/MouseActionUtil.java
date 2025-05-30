@@ -5,76 +5,90 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
+/**
+ * Utility class for performing mouse-related actions like hover, click, and right-click
+ * using Selenium's {@link Actions} class.
+ * All actions are wrapped with logging using {@link ReporterUtil} and wait conditions using {@link WaitUtil}.
+ */
 public class MouseActionUtil {
-	
-	private WebDriver driver;
+
+    private WebDriver driver;
     private Actions actions;
     private WaitUtil waitUtil;
 
+    /**
+     * Constructor to initialize mouse actions and utilities.
+     *
+     * @param driver The WebDriver instance to be used for performing actions
+     */
     public MouseActionUtil(WebDriver driver) {
         this.driver = driver;
         this.actions = new Actions(driver);
         this.waitUtil = new WaitUtil(driver);
+        ReporterUtil.resultsReporter(
+                null,
+                LogLevel.INFO,
+                LogMessageUtil.CLASS_INITIALIZED_MESSAGE,
+                "MouseActionUtil",
+                "10"
+        );
     }
 
     public void hover(By locator) {
-        WebElement element = waitUtil.waitForElementToBeVisible(locator);
-        actions.moveToElement(element).perform();
-    }
-
-    public void hover(WebElement element) {
-        waitUtil.waitForElementToBeVisible(getByFromElement(element)); 
-        actions.moveToElement(element).perform();
+        try {
+            WebElement element = waitUtil.waitForElementToBeVisible(locator);
+            actions.moveToElement(element).perform();
+            ReporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.ACTION_SUCCESS_MESSAGE, "hover", locator.toString());
+        } catch (Exception e) {
+            ReporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.ACTION_FAILED_MESSAGE, "hover", locator.toString());
+        }
     }
 
     public void rightClick(By locator) {
-        WebElement element = waitUtil.waitForElementToBeVisible(locator);
-        actions.contextClick(element).perform();
-    }
-
-    public void doubleClick(By locator) {
-        WebElement element = waitUtil.waitForElementToBeVisible(locator);
-        actions.doubleClick(element).perform();
-    }
-
-    public void clickAndHold(By locator) {
-        WebElement element = waitUtil.waitForElementToBeClickable(locator);
-        actions.clickAndHold(element).perform();
-    }
-
-    public void releaseClick(By locator) {
-        WebElement element = waitUtil.waitForElementToBeClickable(locator);
-        actions.release(element).perform();
-    }
-
-    public void dragAndDrop(By sourceLocator, By targetLocator) {
-        WebElement source = waitUtil.waitForElementToBeVisible(sourceLocator);
-        WebElement target = waitUtil.waitForElementToBeVisible(targetLocator);
-        actions.dragAndDrop(source, target).perform();
+        try {
+            WebElement element = waitUtil.waitForElementToBeVisible(locator);
+            actions.contextClick(element).perform();
+            ReporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.ACTION_SUCCESS_MESSAGE, "right-click", locator.toString());
+        } catch (Exception e) {
+            ReporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.ACTION_FAILED_MESSAGE, "right-click", locator.toString());
+        }
     }
 
     public void click(By locator) {
-        WebElement element = waitUtil.waitForElementToBeClickable(locator);
-        actions.moveToElement(element).click().perform();
+        try {
+            WebElement element = waitUtil.waitForElementToBeClickable(locator);
+            actions.moveToElement(element).click().perform();
+            ReporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.ACTION_SUCCESS_MESSAGE, "click", locator.toString());
+        } catch (Exception e) {
+            ReporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.ACTION_FAILED_MESSAGE, "click", locator.toString());
+        }
     }
 
     public void click(WebElement element) {
-        waitUtil.waitForElementToBeVisible(getByFromElement(element)); 
-        actions.moveToElement(element).click().perform();
+        try {
+            waitUtil.waitForElementToBeVisible(getByFromElement(element)); // symbolic/logging only
+            actions.moveToElement(element).click().perform();
+            ReporterUtil.resultsReporter(null, LogLevel.INFO, LogMessageUtil.ACTION_SUCCESS_MESSAGE, "click", "WebElement");
+        } catch (Exception e) {
+            ReporterUtil.resultsReporter(null, LogLevel.ERROR, LogMessageUtil.ACTION_FAILED_MESSAGE, "click", "WebElement");
+        }
+    }
+
+    public void clickAnyContactRow() {
+        By contactRowLocator = By.cssSelector(".contactTableBodyRow");
+        try {
+            WebElement contactRow = waitUtil.waitForElementToBeVisible(contactRowLocator);
+            contactRow.click();
+            ReporterUtil.resultsReporter(contactRowLocator, LogLevel.INFO, LogMessageUtil.ACTION_SUCCESS_MESSAGE, "click", "any contact row");
+        } catch (Exception e) {
+            ReporterUtil.resultsReporter(contactRowLocator, LogLevel.ERROR, LogMessageUtil.ACTION_FAILED_MESSAGE, "click", "any contact row");
+        }
     }
 
     /**
-     * Helper method: attempts to build a By locator from a WebElement (optional).
-     * If you have full control over your test framework, consider passing By instead of WebElement.
+     * Symbolic locator used only for log message context.
      */
     private By getByFromElement(WebElement element) {
-        return By.xpath("."); 
-    }
-    
-    // For clicking the contact in a row
-    public void clickAnyContactRow() {
-        By contactRowLocator = By.cssSelector(".contactTableBodyRow");
-        WebElement contactRow = waitUtil.waitForElementToBeVisible(contactRowLocator);
-        contactRow.click();
+        return By.xpath("."); // symbolic
     }
 }

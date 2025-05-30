@@ -10,67 +10,73 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+/**
+ * DriverFactory is a utility class responsible for creating and managing
+ * WebDriver instances using the ThreadLocal pattern for thread safety.
+ * <p>
+ * It reads configuration from the {@link ConfigReader} to decide the browser type
+ * and implicit wait duration. This allows parallel test execution with isolated driver instances.
+ */
 public class DriverFactory {
-	
-//	private static final ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
-//
-//    // Config keys
-//    private static final String BROWSER_KEY = "browser";
-//    private static final String IMPLICIT_WAIT_KEY = "implicit_wait";
-//    private static final String CHROME_PATH_KEY = "CHROME_PATH";
-//    private static final String FIREFOX_PATH_KEY = "FIREFOX_PATH";
-//    private static final String EDGE_PATH_KEY = "EDGE_PATH";
+
+//    /**
+//     * Thread-local storage for WebDriver instances.
+//     * Ensures each thread has its own WebDriver to prevent test collisions.
+//     */
+//    private static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
 //
 //    /**
-//     * Initializes the WebDriver based on configuration.
+//     * Initializes the WebDriver based on the configured browser name and wait time.
+//     * Supports Chrome, Firefox, and Edge browsers.
+//     *
+//     * @return Initialized {@link WebDriver} instance
+//     * @throws IllegalArgumentException if the browser type is unsupported
 //     */
 //    public static WebDriver initDriver() {
-//        String browser = Optional.ofNullable(ConfigReader.get(BROWSER_KEY))
-//                .orElseThrow(() -> new IllegalArgumentException("Browser type not specified in config"));
-//        long waitSeconds = Long.parseLong(Optional.ofNullable(ConfigReader.get(IMPLICIT_WAIT_KEY)).orElse("10"));
+//        String browser = ConfigReader.get("browser");
+//        String implicitWait = ConfigReader.get("implicit_wait");
 //
-//        tlDriver.set(createDriver(browser.toLowerCase(Locale.ROOT)));
+//        switch (Objects.requireNonNull(browser).toLowerCase()) {
+//            case "chrome":
+//                System.setProperty("webdriver.chrome.driver", ConfigReader.get("CHROME_PATH"));
+//                tlDriver.set(new ChromeDriver());
+//                break;
+//            case "firefox":
+//                System.setProperty("webdriver.gecko.driver", ConfigReader.get("FIREFOX_PATH"));
+//                tlDriver.set(new FirefoxDriver());
+//                break;
+//            case "edge":
+//                System.setProperty("webdriver.edge.driver", ConfigReader.get("EDGE_PATH"));
+//                tlDriver.set(new EdgeDriver());
+//                break;
+//            default:
+//                throw new IllegalArgumentException("Browser not supported: " + browser);
+//        }
 //
-//        WebDriver driver = getDriver();
-//        driver.manage().window().maximize();
-//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(waitSeconds));
-//        return driver;
+//        getDriver().manage().window().maximize();
+//        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(Long.parseLong(implicitWait)));
+//        return getDriver();
 //    }
 //
 //    /**
-//     * Returns the current WebDriver instance from ThreadLocal.
+//     * Returns the current thread's WebDriver instance.
+//     *
+//     * @return The {@link WebDriver} associated with the current thread
 //     */
 //    public static WebDriver getDriver() {
 //        return tlDriver.get();
 //    }
 //
 //    /**
-//     * Quits and cleans up the WebDriver instance.
+//     * Quits the WebDriver instance for the current thread and removes it from ThreadLocal storage.
+//     * This is critical for preventing memory leaks in parallel executions.
 //     */
 //    public static void quitDriver() {
-//        WebDriver driver = tlDriver.get();
-//        if (driver != null) {
-//            driver.quit();
+//        if (tlDriver.get() != null) {
+//            tlDriver.get().quit();
 //            tlDriver.remove();
-//        }
-//    }
-//
-//    /**
-//     * Creates a WebDriver instance based on browser type.
-//     */
-//    private static WebDriver createDriver(String browser) {
-//        switch (browser) {
-//            case "chrome":
-//                System.setProperty("webdriver.chrome.driver", ConfigReader.get(CHROME_PATH_KEY));
-//                return new ChromeDriver();
-//            case "firefox":
-//                System.setProperty("webdriver.gecko.driver", ConfigReader.get(FIREFOX_PATH_KEY));
-//                return new FirefoxDriver();
-//            case "edge":
-//                System.setProperty("webdriver.edge.driver", ConfigReader.get(EDGE_PATH_KEY));
-//                return new EdgeDriver();
-//            default:
-//                throw new IllegalArgumentException("Unsupported browser: " + browser);
 //        }
 //    }
 	
@@ -82,15 +88,15 @@ public class DriverFactory {
 
         switch (Objects.requireNonNull(browser).toLowerCase()) {
             case "chrome":
-                System.setProperty("webdriver.chrome.driver", ConfigReader.get("CHROME_PATH"));
+                WebDriverManager.chromedriver().setup();
                 tlDriver.set(new ChromeDriver());
                 break;
             case "firefox":
-                System.setProperty("webdriver.gecko.driver", ConfigReader.get("FIREFOX_PATH"));
+                WebDriverManager.firefoxdriver().setup();
                 tlDriver.set(new FirefoxDriver());
                 break;
             case "edge":
-                System.setProperty("webdriver.edge.driver", ConfigReader.get("EDGE_PATH"));
+                WebDriverManager.edgedriver().setup();
                 tlDriver.set(new EdgeDriver());
                 break;
             default:

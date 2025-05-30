@@ -1,4 +1,4 @@
-@tag
+@ui
 Feature: Test signup functionality
 
   @TC2.1
@@ -26,8 +26,8 @@ Feature: Test signup functionality
     Given user hit Sign up
     Then user is on addUser page
     When user input in all fields
-      | firstName | lastName | email             | password   |
-      | Carmen      | Fernandez      | minmin@test.com | {password} |
+      | firstName | lastName  | email           | password   |
+      | Carmen    | Fernandez | carmenpumadora@test.com | {password} |
     And hit the signUp Submit button
     Then new user is successfully added and redirected to Contact List
 

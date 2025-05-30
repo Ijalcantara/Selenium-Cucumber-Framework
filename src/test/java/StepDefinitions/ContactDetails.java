@@ -9,7 +9,7 @@ import com.cheq.contactlist.pages.ContactDetailPage;
 import com.cheq.contactlist.pages.ContactListPage;
 import com.cheq.contactlist.pages.LogInPage;
 import com.cheq.contactlist.utils.ElementAssertUtil;
-import com.cheq.contactlist.utils.TestDataResolver;
+import com.cheq.contactlist.utils.TestDataUtil;
 import com.cheq.contactlist.utils.WaitUtil;
 
 import Hooks.Hooks;
@@ -40,7 +40,7 @@ public class ContactDetails {
         String email = row.get("email");
         String rawPassword = row.get("password");
 
-        String resolvedPassword = TestDataResolver.resolvePassword(email, rawPassword, true);
+        String resolvedPassword = TestDataUtil.resolvePassword(email, rawPassword, true);
 
         loginPage.enterEmail(email);
         loginPage.enterPassword(resolvedPassword);
@@ -65,12 +65,14 @@ public class ContactDetails {
     @And("the user clicks the Delete Contact button")
     public void the_user_clicks_the_delete_contact_button() {
         contactDetail.clickDeleteContact();
+        waitUtil.pause(2);
     }
 
     @And("the user confirms deletion on the dialog box")
     public void the_user_confirms_deletion_on_the_dialog_box() {
-        Alert alert = ElementAssertUtil.assertAlertIsPresent(driver, waitUtil, "delete");
-        ElementAssertUtil.acceptAlert(alert);
+//        Alert alert = ElementAssertUtil.assertAlertIsPresent(driver, waitUtil, "delete");
+//        ElementAssertUtil.acceptAlert(alert);
+    	ElementAssertUtil.confirmDeletion(driver, waitUtil);
     }
 
     @Then("the contact should be deleted from the Contact List and no longer visible")

@@ -1,47 +1,145 @@
 package com.cheq.contactlist.utils;
 
-import java.util.logging.ConsoleHandler;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
+/**
+ * Utility class for centralized logging throughout the Contact List Automation framework.
+ * Uses Java's built-in logging API and provides simplified static methods for logging.
+ *
+ */
 public class LoggerUtil {
 
 	private static Logger logger;
+    private static FileHandler fileHandler;
+    private static String BASE_LOG_FOLDER;
 
-    static {
-        logger = Logger.getLogger("ContactListAutomationLogger");
-        logger.setUseParentHandlers(false); 
+    /**
+     * Initializes the logger and sets up the log file handler
+     */
+    public synchronized static void setupLogger() {
+        if (logger != null) return;
 
-        ConsoleHandler consoleHandler = new ConsoleHandler();
-        consoleHandler.setLevel(Level.ALL);
-        consoleHandler.setFormatter(new SimpleFormatter());
+        try {
+            BASE_LOG_FOLDER = ConfigReader.get("logs_folder");
+            if (BASE_LOG_FOLDER == null || BASE_LOG_FOLDER.isEmpty()) {
+                BASE_LOG_FOLDER = "logs"; // Fallback default
+            }
 
-        logger.addHandler(consoleHandler);
-        logger.setLevel(Level.ALL); 
+            createLogFolder();
+
+            String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
+            String logFilePath = BASE_LOG_FOLDER + File.separator + date + "_logs.txt";
+
+            logger = Logger.getLogger(LoggerUtil.class.getName());
+
+            // Remove existing handlers to avoid duplicates
+            for (Handler handler : logger.getHandlers()) {
+                logger.removeHandler(handler);
+            }
+
+            fileHandler = new FileHandler(logFilePath, true);
+            fileHandler.setFormatter(new Formatter() {
+                @Override
+                public String format(LogRecord record) {
+                    String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS").format(new Date(record.getMillis()));
+                    String logLevel = record.getLevel().getLocalizedName();
+                    String message = formatMessage(record);
+                    return String.format("%s - %s - %s%n", timestamp, logLevel, message);
+                }
+            });
+
+            logger.addHandler(fileHandler);
+            logger.setLevel(Level.ALL);
+
+            String formattedDate = new SimpleDateFormat("MMMM dd, yyyy hh:mm a").format(new Date());
+
+            logSeparator("Start of Test");
+            logger.info(String.format("` Date : %s `", formattedDate));
+            logSeparator("");
+
+        } catch (IOException e) {
+            System.err.println("Failed to initialize logger: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    private LoggerUtil() {
-        // Prevent instantiation
+    /**
+     * Creates the log folder if it does not exist
+     */
+    private static void createLogFolder() {
+        File logFolder = new File(BASE_LOG_FOLDER);
+        if (!logFolder.exists() && !logFolder.mkdirs()) {
+            throw new RuntimeException("Failed to create log directory: " + logFolder.getAbsolutePath());
+        }
     }
 
-    public static void info(String message) {
-        logger.info(message);
+    /**
+     * Logs a message with the specified log level and the predefined log message.
+     */
+    public static void logMessage(String logLevel, String logMsg, Object... args) {
+        if (args != null && args.length > 0) {
+            logMsg = String.format(logMsg, args);
+        }
+
+        if (logger != null) {
+            switch (logLevel.toUpperCase()) {
+                case "INFO":
+                    logger.info(logMsg);
+                    break;
+                case "SEVERE":
+                case "ERROR":
+                    logger.severe(logMsg);
+                    break;
+                case "WARNING":
+                    logger.warning(logMsg);
+                    break;
+                default:
+                    logger.info("Unknown log level: " + logMsg);
+                    break;
+            }
+        }
     }
 
-    public static void warn(String message) {
-        logger.warning(message);
+    /**
+     * Logs and throws a RuntimeException with the given log message and log level
+     */
+    public static void logAndThrow(String logLevel, String logMsg, Object... args) {
+        if (args != null && args.length > 0) {
+            logMsg = String.format(logMsg, args);
+        }
+
+        logMessage(logLevel, logMsg, args);
+        throw new RuntimeException(String.format("[%s] - %s", logLevel.toUpperCase(), logMsg));
     }
 
-    public static void error(String message) {
-        logger.severe(message);
+    /**
+     * Closes the logger and releases resources
+     */
+    public static void closeLogger() {
+        if (fileHandler != null) {
+            fileHandler.close();
+        }
     }
 
-    public static void debug(String message) {
-        logger.fine(message);
-    }
-
-    public static void log(Level level, String message) {
-        logger.log(level, message);
+    /**
+     * Logs a separator line with a custom label
+     */
+    private static void logSeparator(String label) {
+        String separator = "------------------------------------------------";
+        if (!label.isEmpty()) {
+            logger.info(separator);
+            logger.info(String.format("` %s `", label));
+        }
+        logger.info(separator);
     }
 }

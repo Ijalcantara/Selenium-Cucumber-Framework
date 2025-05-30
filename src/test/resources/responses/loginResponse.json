@@ -1,0 +1,10 @@
+{
+    "user": {
+        "_id": "6837d5bd5fe0e80015835c6c",
+        "firstName": "api",
+        "lastName": "addUser",
+        "email": "addapiuser@test.com",
+        "__v": 3
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODM3ZDViZDVmZTBlODAwMTU4MzVjNmMiLCJpYXQiOjE3NDg0ODk5OTZ9.Ph5R1az2jO4i3A85hRDbBuCNylzWQZ0xVZ0m8aECzjE"
+}

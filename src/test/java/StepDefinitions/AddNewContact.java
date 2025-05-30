@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import com.cheq.contactlist.pages.AddContactPage;
 import com.cheq.contactlist.pages.ContactListPage;
 import com.cheq.contactlist.pages.LogInPage;
-import com.cheq.contactlist.utils.TestDataResolver;
+import com.cheq.contactlist.utils.TestDataUtil;
 import com.cheq.contactlist.utils.WaitUtil;
 
 import Hooks.Hooks;
@@ -16,6 +16,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+/**
+ * Step definition for Adding New Contact using UI
+ */
 public class AddNewContact {
 
 	private WebDriver driver;
@@ -42,7 +45,7 @@ public class AddNewContact {
         String email = row.get("email");
         String rawPassword = row.get("password");
 
-        String resolvedPassword = TestDataResolver.resolvePassword(email, rawPassword, true);
+        String resolvedPassword = TestDataUtil.resolvePassword(email, rawPassword, true);
 
         loginPage.enterEmail(email);
         loginPage.enterPassword(resolvedPassword);
@@ -61,7 +64,7 @@ public class AddNewContact {
 	@When("user enter details in all fields")
 	public void user_enter_details_in_all_fields(DataTable dataTable) {
 		Map<String, String> row = dataTable.asMaps(String.class, String.class).get(0);
-        addContact.enterFirstName(row.get("firstName"));
+	    String firstName = row.get("firstName").equalsIgnoreCase("{empty}") ? "" : row.get("firstName");
         addContact.enterLastName(row.get("lastName"));
         addContact.enterBirthdate(row.get("birthdate"));
         addContact.enterEmail(row.get("email"));

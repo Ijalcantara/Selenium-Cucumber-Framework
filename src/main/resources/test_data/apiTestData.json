@@ -1,0 +1,24 @@
+{
+  "userCreation": {
+    "firstName": "Jemimah",
+    "lastName": "Alcantara",
+    "email": "mimaymoody@gmail.com",
+    "password": "password123"
+  },
+  "userUpdate": {
+    "firstName": "Updated Api",
+    "lastName": "Updated Cruz",
+    "email": "updatedApi1@sample.com",
+    "password": "newPassword123"
+  },
+  "loginCredentials": {
+    "valid": {
+      "email": "addApiUser@test.com",
+      "password": "password123"
+    },
+    "invalid": {
+      "email": "testApi1@sample.com",
+      "password": "wrongPassword"
+    }
+  }
+}

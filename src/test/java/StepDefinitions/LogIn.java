@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import com.cheq.contactlist.pages.LogInPage;
-import com.cheq.contactlist.utils.TestDataResolver;
+import com.cheq.contactlist.utils.TestDataUtil;
 import com.cheq.contactlist.utils.WaitUtil;
 
 import Hooks.Hooks;
@@ -52,7 +52,7 @@ public class LogIn {
     public void user_enter_a_valid_password(io.cucumber.datatable.DataTable dataTable) {
     	List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
         String placeholderPassword = rows.get(0).get("password").trim();
-        String resolvedPassword = TestDataResolver.resolvePassword(currentEmail, placeholderPassword, true);
+        String resolvedPassword = TestDataUtil.resolvePassword(currentEmail, placeholderPassword, true);
         loginPage.enterPassword(resolvedPassword);
     }
     
@@ -61,7 +61,7 @@ public class LogIn {
     public void user_enter_an_invalid_password(io.cucumber.datatable.DataTable dataTable) {
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
         String placeholderPassword = rows.get(0).get("password").trim();
-        String resolvedPassword = TestDataResolver.resolvePassword(currentEmail, placeholderPassword, false);
+        String resolvedPassword = TestDataUtil.resolvePassword(currentEmail, placeholderPassword, false);
         loginPage.enterPassword(resolvedPassword);
     }
     
@@ -76,7 +76,7 @@ public class LogIn {
     public void user_leave_an_empty_password(io.cucumber.datatable.DataTable dataTable) {
     	List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
         String placeholderPassword = rows.get(0).get("password").trim();
-        String resolvedPassword = TestDataResolver.resolvePassword(currentEmail, placeholderPassword, false);
+        String resolvedPassword = TestDataUtil.resolvePassword(currentEmail, placeholderPassword, false);
         loginPage.enterPassword(resolvedPassword);
     }
     

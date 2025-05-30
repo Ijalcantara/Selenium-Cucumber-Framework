@@ -5,7 +5,7 @@ import java.util.Map;
 import org.openqa.selenium.WebDriver;
 
 import com.cheq.contactlist.pages.LogInPage;
-import com.cheq.contactlist.utils.TestDataResolver;
+import com.cheq.contactlist.utils.TestDataUtil;
 import com.cheq.contactlist.utils.WaitUtil;
 
 import Hooks.Hooks;
@@ -36,7 +36,7 @@ public class ContactList {
         String email = row.get("email");
         String rawPassword = row.get("password");
 
-        String resolvedPassword = TestDataResolver.resolvePassword(email, rawPassword, true);
+        String resolvedPassword = TestDataUtil.resolvePassword(email, rawPassword, true);
 
         loginPage.enterEmail(email);
         loginPage.enterPassword(resolvedPassword);

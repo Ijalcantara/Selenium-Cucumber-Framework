@@ -6,9 +6,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
+/**
+ * Utility class for performing keyboard actions using Selenium WebDriver.
+ * Integrates with {@link WaitUtil} for synchronization and {@link ReporterUtil} for logging.
+ */
 public class KeyboardActionUtil {
 
-	private WebDriver driver;
+    private WebDriver driver;
     private Actions actions;
     private WaitUtil waitUtil;
     private int timeout;
@@ -18,89 +22,98 @@ public class KeyboardActionUtil {
         this.actions = new Actions(driver);
         this.waitUtil = new WaitUtil(driver);
         this.timeout = 10;
+        ReporterUtil.resultsReporter(null, LogLevel.INFO,
+            LogMessageUtil.initialized("KeyboardActionUtil", timeout),
+            "initialize",
+            "KeyboardActionUtil"
+        );
     }
 
     public void pressEnter() {
-        actions.sendKeys(Keys.ENTER).perform();
+        try {
+            actions.sendKeys(Keys.ENTER).perform();
+            ReporterUtil.resultsReporter(null, LogLevel.INFO, LogMessageUtil.pressKeySuccess("ENTER", "keyboard"), "press ENTER", "keyboard");
+        } catch (Exception e) {
+            ReporterUtil.resultsReporter(null, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("ENTER", "keyboard"), "press ENTER", "keyboard");
+        }
     }
 
     public void pressTab() {
-        actions.sendKeys(Keys.TAB).perform();
+        try {
+            actions.sendKeys(Keys.TAB).perform();
+            ReporterUtil.resultsReporter(null, LogLevel.INFO, LogMessageUtil.pressKeySuccess("TAB", "keyboard"), "press TAB", "keyboard");
+        } catch (Exception e) {
+            ReporterUtil.resultsReporter(null, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("TAB", "keyboard"), "press TAB", "keyboard");
+        }
     }
 
     public void pressBackspace() {
-        actions.sendKeys(Keys.BACK_SPACE).perform();
+        try {
+            actions.sendKeys(Keys.BACK_SPACE).perform();
+            ReporterUtil.resultsReporter(null, LogLevel.INFO, LogMessageUtil.pressKeySuccess("BACKSPACE", "keyboard"), "press BACKSPACE", "keyboard");
+        } catch (Exception e) {
+            ReporterUtil.resultsReporter(null, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("BACKSPACE", "keyboard"), "press BACKSPACE", "keyboard");
+        }
     }
 
-    /**
-     * Types text into the element located by the provided locator with SHIFT key.
-     * @param locator Locator of the element
-     * @param text Text to type
-     */
     public void typeWithShift(By locator, String text) {
-        WebElement element = waitUtil.waitForElementToBeVisible(locator);
-        actions.moveToElement(element).click().keyDown(Keys.SHIFT).sendKeys(text).keyUp(Keys.SHIFT).perform();
+        try {
+            WebElement element = waitUtil.waitForElementToBeVisible(locator);
+            actions.moveToElement(element).click().keyDown(Keys.SHIFT).sendKeys(text).keyUp(Keys.SHIFT).perform();
+            ReporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.actionSuccess("type with SHIFT", locator), "type with SHIFT", locator.toString());
+        } catch (Exception e) {
+            ReporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.actionFail("type with SHIFT", locator), "type with SHIFT", locator.toString());
+        }
     }
 
-    /**
-     * Clears the field using keyboard shortcuts (Ctrl+A, Backspace).
-     * @param locator Locator of the element
-     */
     public void clearFieldUsingKeyboard(By locator) {
-        WebElement element = waitUtil.waitForElementToBeVisible(locator);
-        element.click();
-        actions.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(Keys.BACK_SPACE).perform();
+        try {
+            WebElement element = waitUtil.waitForElementToBeVisible(locator);
+            element.click();
+            actions.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(Keys.BACK_SPACE).perform();
+            ReporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.clearFieldSuccess(locator), "clear field using keyboard", locator.toString());
+        } catch (Exception e) {
+            ReporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.clearFieldFailed(locator), "clear field using keyboard", locator.toString());
+        }
     }
 
-    /**
-     * Types text into the element located by the provided locator, with an option to clear the field before typing.
-     * @param locator Locator of the element
-     * @param text Text to type
-     * @param clearBeforeTyping If true, clears the field before typing
-     */
     public void typeText(By locator, String text, boolean clearBeforeTyping) {
-        WebElement element = waitUtil.waitForElementToBeVisible(locator);
-        element.click();
-
-        if (clearBeforeTyping) {
-            clearFieldUsingKeyboard(locator); // Clearing field before typing
-        }
-
-        for (char ch : text.toCharArray()) {
-            element.sendKeys(Character.toString(ch));
-            waitUtil.sleep(100); // 100ms delay between keystrokes (adjust as needed)
+        try {
+            WebElement element = waitUtil.waitForElementToBeVisible(locator);
+            element.click();
+            if (clearBeforeTyping) {
+                clearFieldUsingKeyboard(locator);
+            }
+            for (char ch : text.toCharArray()) {
+                element.sendKeys(Character.toString(ch));
+                waitUtil.sleep(100);
+            }
+            ReporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.typeTextSuccess(text, locator) + " | Text: " + text, "type text", locator.toString());
+        } catch (Exception e) {
+            ReporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.typeTextFailed(text, locator), "type text", locator.toString());
         }
     }
-    
-    /**
-     * Performs a copy-paste action from one element to another.
-     * @param fromElement Source element
-     * @param toElement Target element
-     */
-    public void copyPaste(WebElement fromElement, WebElement toElement) {
-        fromElement.click();
-        actions.keyDown(Keys.CONTROL).sendKeys("a", "c").keyUp(Keys.CONTROL).perform();
-        toElement.click();
-        actions.keyDown(Keys.CONTROL).sendKeys("v").keyUp(Keys.CONTROL).perform();
-    }
 
-    /**
-     * Presses the Tab key in the element located by the provided locator.
-     * @param locator Locator of the element
-     */
+
     public void pressTabInElement(By locator) {
-        WebElement element = waitUtil.waitForElementToBeVisible(locator);
-        element.click();
-        actions.sendKeys(Keys.TAB).perform();
+        try {
+            WebElement element = waitUtil.waitForElementToBeVisible(locator);
+            element.click();
+            actions.sendKeys(Keys.TAB).perform();
+            ReporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.pressKeySuccess("TAB", locator), "press TAB", locator.toString());
+        } catch (Exception e) {
+            ReporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("TAB", locator), "press TAB", locator.toString());
+        }
     }
 
-    /**
-     * Presses the Enter key in the element located by the provided locator.
-     * @param locator Locator of the element
-     */
     public void pressEnterInElement(By locator) {
-        WebElement element = waitUtil.waitForElementToBeVisible(locator);
-        element.click();
-        actions.sendKeys(Keys.ENTER).perform();
+        try {
+            WebElement element = waitUtil.waitForElementToBeVisible(locator);
+            element.click();
+            actions.sendKeys(Keys.ENTER).perform();
+            ReporterUtil.resultsReporter(locator, LogLevel.INFO, LogMessageUtil.pressKeySuccess("ENTER", locator), "press ENTER", locator.toString());
+        } catch (Exception e) {
+            ReporterUtil.resultsReporter(locator, LogLevel.ERROR, LogMessageUtil.pressKeyFailed("ENTER", locator), "press ENTER", locator.toString());
+        }
     }
 }

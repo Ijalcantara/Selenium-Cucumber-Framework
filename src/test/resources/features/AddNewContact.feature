@@ -1,4 +1,4 @@
-@tag @addNewContact
+@ui @addNewContact
 Feature: Test Add New Contact functionality
 
   @TC4.1
@@ -12,7 +12,7 @@ Feature: Test Add New Contact functionality
     When hit the addNewContact button
     And user enter details in all fields
       | firstName | lastName  | birthdate  | email                | phone     | street1 | street2 | city    | stateProvince | postalCode | country     |
-      | Ivy       | Alcantara | 2000-02-26 | whatsNew@example.com | 123456789 | Nia Rd  | Barihan | Malolos | Bulacan       |       3000 | Philippines |
+      | Ivy Jemimah      | Alcantara | 2000-02-26 | addedUserUi@example.com | 123456789 | Nia Rd  | Barihan | Malolos | Bulacan       |       3000 | Philippines |
     When click addnewContact submit button
     Then new user is added in the contact list page
 
@@ -72,7 +72,7 @@ Feature: Test Add New Contact functionality
     When hit the addNewContact button
     And user enter details in all fields
       | firstName | lastName | birthdate  | email                  | phone     | street1 | street2 | city    | stateProvince | postalCode | country     |
-      | Test      | Phone    | 2000-02-26 | testPhone1@example.com | 123456789 | Nia Rd  | Barihan | Malolos | Bulacan       |       3000 | Philippines |
+      | Accepted     | Phone    | 2000-02-26 | testPhone1@example.com | 123456789 | Nia Rd  | Barihan | Malolos | Bulacan       |       3000 | Philippines |
     When click addnewContact submit button
     Then new user is added in the contact list page
 

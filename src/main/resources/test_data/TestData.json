@@ -22,6 +22,18 @@
   },
 	"pichhkobe@test.com": {
 	 "valid_password": "password00"
-	}
+	}, 
+   "adduserApi@test.com": {
+     "valid_password": "password123",
+     "invalid_password": "wrongpass2"
+   }, 
+    "addApiUser@test.com": {
+      "valid_password": "password123",
+      "invalid_password": "wrongpass2"
+    },	  
+      "mimaymoody@gmail.com": {
+        "valid_password": "password123",
+        "invalid_password": "wrongpass2"
+      }
 }
 
